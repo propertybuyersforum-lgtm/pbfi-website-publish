@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Admin — Property Buyers Forum of India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:  #0D1B2A; --navy2: #162033; --navy3: #1E2D42;
+      --gold:  #C9A84C; --gold2: #E8C96A; --gold3: #A07C2E;
+      --cream: #F5F3EE; --cream2: #EDEAE3;
+      --text:  #2D3748; --muted: #718096; --border: rgba(13,27,42,0.09);
+      --green: #1A6B3C; --red: #C53030; --blue: #2B6CB0;
+      --sidebar-bg: #FFFFFF;
+      --sidebar-border: #E8E4DC;
+      --sidebar-text: #3D3D3D;
+      --sidebar-muted: #999;
+      --sidebar-active-bg: #FBF7EE;
+      --sidebar-active-text: #8B6914;
+      --sidebar-hover-bg: #F7F5F0;
+    }
+    html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:#F0F2F5;}
+
+    /* ── LOGIN ── */
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#060F1C 0%,#0A1628 50%,#111E30 100%);position:relative;overflow:hidden;}
+    #loginScreen::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.06) 1px,transparent 1px);background-size:60px 60px;}
+    .login-card{position:relative;z-index:2;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.25);border-radius:20px;padding:3rem 2.75rem;width:100%;max-width:420px;backdrop-filter:blur(24px);box-shadow:0 32px 80px rgba(0,0,0,0.5);}
+    .login-logo{text-align:center;margin-bottom:2.5rem;}
+    .login-shield{width:80px;height:80px;border-radius:50%;border:2px solid rgba(201,168,76,0.45);margin:0 auto 14px;overflow:hidden;background:rgba(7,14,24,0.8);}
+    .login-shield img{width:100%;height:100%;object-fit:cover;}
+    .login-logo h2{font-family:'Cormorant Garamond',serif;color:#F5F3EE;font-size:22px;font-weight:700;}
+    .login-logo p{font-family:'Cinzel',serif;color:rgba(201,168,76,0.7);font-size:10px;letter-spacing:0.18em;margin-top:5px;}
+    .login-divider{width:40px;height:1px;background:rgba(201,168,76,0.3);margin:12px auto 0;}
+    .login-field{margin-bottom:1.25rem;}
+    .login-field label{display:block;color:rgba(245,243,238,0.5);font-size:10px;font-weight:700;letter-spacing:0.12em;margin-bottom:7px;}
+    .login-field input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.18);border-radius:8px;padding:12px 15px;color:#F5F3EE;font-size:14px;outline:none;transition:border-color 0.2s;}
+    .login-field input:focus{border-color:rgba(201,168,76,0.55);}
+    .login-btn{width:100%;background:linear-gradient(135deg,#C9A84C,#E8C96A,#C9A84C);background-size:200%;color:var(--navy);border:none;border-radius:8px;padding:14px;font-size:13px;font-weight:700;letter-spacing:0.1em;cursor:pointer;margin-top:0.5rem;transition:box-shadow 0.2s;box-shadow:0 4px 20px rgba(201,168,76,0.3);}
+    .login-btn:hover{box-shadow:0 6px 28px rgba(201,168,76,0.5);}
+    .login-error{color:#FC8181;font-size:12px;text-align:center;margin-top:10px;display:none;}
+    .login-back{text-align:center;margin-top:1.25rem;}
+    .login-back a{color:rgba(245,243,238,0.25);font-size:12px;text-decoration:none;transition:color 0.2s;}
+    .login-back a:hover{color:rgba(245,243,238,0.6);}
+
+    /* ── SHELL ── */
+    #adminShell{display:none;min-height:100vh;}
+
+    /* ── SIDEBAR — light & readable ── */
+    .sidebar{
+      position:fixed;top:0;left:0;bottom:0;width:256px;
+      background:var(--sidebar-bg);
+      border-right:1px solid var(--sidebar-border);
+      display:flex;flex-direction:column;z-index:100;
+      box-shadow:2px 0 16px rgba(0,0,0,0.06);
+    }
+
+    /* top gold accent bar */
+    .sidebar::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,#C9A84C,#E8C96A,#C9A84C);
+    }
+
+    .sidebar-logo{
+      display:flex;align-items:center;gap:12px;
+      padding:24px 20px 20px;
+      border-bottom:1px solid var(--sidebar-border);
+      background:#FAFAF7;
+    }
+    .sidebar-logo-img{
+      width:42px;height:42px;border-radius:10px;
+      border:1.5px solid rgba(201,168,76,0.4);
+      overflow:hidden;flex-shrink:0;background:#fff;
+    }
+    .sidebar-logo-img img{width:100%;height:100%;object-fit:cover;}
+    .sidebar-logo-name{
+      font-family:'Cormorant Garamond',serif;
+      color:var(--navy);font-size:15px;font-weight:700;line-height:1.2;
+    }
+    .sidebar-logo-tag{
+      font-size:9px;color:var(--gold3);
+      letter-spacing:0.12em;margin-top:3px;font-family:'Cinzel',serif;
+    }
+
+    .sidebar-section-label{
+      font-size:9px;font-weight:700;
+      color:var(--sidebar-muted);
+      letter-spacing:0.18em;
+      padding:18px 20px 6px;
+      font-family:'Cinzel',serif;
+    }
+
+    .sidebar-nav{flex:1;padding:6px 0;overflow-y:auto;}
+
+    .nav-item{
+      display:flex;align-items:center;gap:11px;
+      padding:11px 20px;
+      color:var(--sidebar-text);
+      cursor:pointer;
+      transition:all 0.18s;
+      font-size:13px;font-weight:500;
+      border-left:3px solid transparent;
+      margin:1px 0;
+    }
+    .nav-item:hover{
+      color:var(--navy);
+      background:var(--sidebar-hover-bg);
+    }
+    .nav-item.active{
+      color:var(--sidebar-active-text);
+      border-left-color:var(--gold);
+      background:var(--sidebar-active-bg);
+      font-weight:600;
+    }
+
+    /* ── SVG nav icons (no emojis) ── */
+    .nav-icon{
+      width:18px;height:18px;flex-shrink:0;
+      opacity:0.55;transition:opacity 0.18s;
+    }
+    .nav-item:hover .nav-icon,.nav-item.active .nav-icon{opacity:1;}
+    .nav-item.active .nav-icon path,
+    .nav-item.active .nav-icon rect,
+    .nav-item.active .nav-icon circle,
+    .nav-item.active .nav-icon polyline{ stroke:var(--gold3) !important; }
+
+    .nav-badge{margin-left:auto;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;}
+    .nav-badge.green-badge{background:#48BB78;color:#fff;}
+
+    .sidebar-footer{
+      padding:14px 16px;
+      border-top:1px solid var(--sidebar-border);
+      background:#FAFAF7;
+    }
+    .sidebar-footer a{
+      color:var(--sidebar-muted);font-size:12px;text-decoration:none;
+      display:flex;align-items:center;gap:7px;padding:6px 4px;
+      border-radius:6px;transition:all 0.15s;
+    }
+    .sidebar-footer a:hover{color:var(--navy);background:var(--sidebar-hover-bg);padding-left:8px;}
+    .sidebar-footer a.logout-link{color:#C53030 !important;}
+    .sidebar-footer a.logout-link:hover{background:#FFF5F5;}
+    .footer-icon{width:14px;height:14px;flex-shrink:0;opacity:0.6;}
+
+    /* ── MAIN ── */
+    .main{margin-left:256px;min-height:100vh;}
+
+    /* ── TOPBAR ── */
+    .topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+    .topbar-title{font-size:16px;font-weight:700;color:var(--navy);}
+    .topbar-right{display:flex;align-items:center;gap:10px;}
+    .conn-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;}
+    .conn-pill.connected{background:#F0FFF4;color:var(--green);border:1px solid #C6F6D5;}
+    .conn-pill.disconnected{background:#FFF5F5;color:var(--red);border:1px solid #FED7D7;}
+    .conn-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+    .conn-pill.connected .conn-dot{animation:connPulse 2s ease-in-out infinite;}
+    @keyframes connPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+    .new-pill{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;}
+    .topbar-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;}
+    .topbar-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .topbar-btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border-color:transparent;}
+    .topbar-btn.gold:hover{box-shadow:0 4px 16px rgba(201,168,76,0.4);transform:translateY(-1px);}
+
+    /* ── CONTENT ── */
+    .page-content{padding:28px;}
+    .page-content>section{display:none;}
+    .page-content>section.active{display:block;}
+
+    .alert-banner{display:none;align-items:center;gap:12px;background:#FFF8E6;border:1px solid rgba(201,168,76,0.4);border-left:4px solid var(--gold);border-radius:10px;padding:14px 18px;margin-bottom:24px;font-size:13px;color:#744210;}
+    .alert-banner.show{display:flex;}
+
+    /* ── STATS ── */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px;}
+    .stat-card{background:#fff;border-radius:14px;padding:22px 24px;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+    .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1);}
+    .stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;}
+    .stat-card.gold::after{background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));}
+    .stat-card.blue::after{background:linear-gradient(90deg,#2B6CB0,#63B3ED);}
+    .stat-card.green::after{background:linear-gradient(90deg,var(--green),#48BB78);}
+    .stat-card.red::after{background:linear-gradient(90deg,var(--red),#FC8181);}
+    .stat-card.teal::after{background:linear-gradient(90deg,#2C7A7B,#4FD1C5);}
+    .stat-card.purple::after{background:linear-gradient(90deg,#553C9A,#9F7AEA);}
+    .stat-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+    .stat-card.gold  .stat-card-icon{background:rgba(201,168,76,0.12);}
+    .stat-card.blue  .stat-card-icon{background:rgba(43,108,176,0.1);}
+    .stat-card.green .stat-card-icon{background:rgba(26,107,60,0.1);}
+    .stat-card.red   .stat-card-icon{background:rgba(197,48,48,0.1);}
+    .stat-card.teal  .stat-card-icon{background:rgba(44,122,123,0.1);}
+    .stat-card-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;margin-bottom:6px;}
+    .stat-card-value{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--navy);line-height:1;}
+    .stat-card.gold .stat-card-value{color:var(--gold3);}
+    .stat-card-sub{font-size:12px;color:var(--muted);margin-top:8px;}
+
+    /* stat card SVG icons */
+    .stat-icon{width:22px;height:22px;}
+    .stat-card.gold  .stat-icon path,.stat-card.gold  .stat-icon rect{ stroke:var(--gold3); }
+    .stat-card.blue  .stat-icon path,.stat-card.blue  .stat-icon rect{ stroke:#2B6CB0; }
+    .stat-card.green .stat-icon path,.stat-card.green .stat-icon circle{ stroke:var(--green); }
+    .stat-card.red   .stat-icon path,.stat-card.red   .stat-icon circle{ stroke:var(--red); }
+    .stat-card.teal  .stat-icon path{ stroke:#2C7A7B; }
+
+    /* ── TABLE CARD ── */
+    .table-card{background:#fff;border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+    .table-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .table-title{font-size:15px;font-weight:700;color:var(--navy);}
+    .table-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+    .table-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;}
+    .search-wrap{position:relative;}
+    .search-wrap input{border:1px solid var(--border);border-radius:8px;padding:8px 12px 8px 36px;font-size:13px;outline:none;width:220px;transition:border-color 0.2s;}
+    .search-wrap input:focus{border-color:var(--gold);}
+    .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:0.4;}
+    .filter-select{border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;outline:none;background:#fff;cursor:pointer;}
+    .filter-select:focus{border-color:var(--gold);}
+    .action-btn{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+    .action-btn:hover{background:var(--navy3);}
+    .action-btn.gold-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);}
+    .action-btn.gold-btn:hover{box-shadow:0 4px 14px rgba(201,168,76,0.4);transform:translateY(-1px);}
+
+    table{width:100%;border-collapse:collapse;}
+    thead th{padding:11px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;border-bottom:2px solid var(--border);background:var(--cream);}
+    tbody tr{border-bottom:1px solid rgba(13,27,42,0.05);transition:background 0.15s;}
+    tbody tr:last-child{border-bottom:none;}
+    tbody tr:hover{background:#FAFAF8;}
+    tbody td{padding:13px 16px;font-size:13px;color:var(--text);vertical-align:top;}
+    .td-name{font-weight:600;color:var(--navy);}
+    .td-email{color:var(--muted);font-size:11px;margin-top:2px;}
+    .td-msg{color:var(--muted);font-size:12px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+    .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+    .badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+    .badge-new{background:#EBF8FF;color:var(--blue);}
+    .badge-replied{background:#F0FFF4;color:var(--green);}
+    .badge-closed{background:#F7FAFC;color:var(--muted);}
+    .badge-urgent{background:#FFF5F5;color:var(--red);}
+    .badge-pending{background:#FFFBEB;color:#92400E;}
+    .badge-active{background:#F0FFF4;color:var(--green);}
+    .badge-expired{background:#FFF5F5;color:var(--red);}
+    .badge-individual{background:rgba(201,168,76,0.12);color:var(--gold3);}
+    .badge-institution{background:rgba(27,58,92,0.1);color:#1B3A5C;}
+
+    .row-actions{display:flex;gap:5px;align-items:center;}
+    .row-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:11px;cursor:pointer;color:var(--muted);transition:all 0.15s;text-decoration:none;display:inline-block;white-space:nowrap;}
+    .row-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .row-btn.activate-btn{border-color:rgba(26,107,60,0.3);color:var(--green);}
+    .row-btn.activate-btn:hover{background:var(--green);color:#fff;}
+
+    .pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);}
+    .page-btns{display:flex;gap:4px;}
+    .page-btn{border:1px solid var(--border);background:#fff;border-radius:6px;padding:5px 11px;font-size:12px;cursor:pointer;transition:all 0.15s;}
+    .page-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .page-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border-color:transparent;font-weight:700;}
+    .loading-row td,.empty-row td{text-align:center;padding:4rem;color:var(--muted);font-size:13px;}
+
+    /* ── MODAL ── */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(7,14,24,0.65);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;}
+    .modal-backdrop.open{display:flex;}
+    .modal{background:#fff;border-radius:16px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,0.35);}
+    .modal-head{background:linear-gradient(135deg,var(--navy),var(--navy3));padding:22px 26px;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;}
+    .modal-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:#F5F3EE;font-weight:700;}
+    .modal-subtitle{font-size:11px;color:rgba(201,168,76,0.7);margin-top:2px;}
+    .modal-close{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(245,243,238,0.6);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all 0.2s;}
+    .modal-close:hover{background:rgba(255,255,255,0.15);color:#fff;}
+    .modal-body{padding:24px 26px;}
+    .modal-row{display:flex;padding:11px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+    .modal-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;min-width:110px;padding-top:2px;}
+    .modal-val{font-size:14px;color:var(--text);flex:1;word-break:break-all;}
+    .modal-msg-box{background:var(--cream);border-radius:10px;padding:16px;font-size:14px;line-height:1.75;color:var(--text);margin:16px 0;border:1px solid var(--cream2);}
+    .status-wrap{padding:0 0 16px;}
+    .status-wrap label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;display:block;margin-bottom:6px;}
+    .status-select{border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;width:100%;outline:none;background:#fff;}
+    .status-select:focus{border-color:var(--gold);}
+    .modal-actions{display:flex;gap:10px;flex-wrap:wrap;padding:16px 26px 22px;border-top:1px solid var(--border);background:var(--cream);border-radius:0 0 16px 16px;}
+
+    /* ── CONFIG ── */
+    .config-card{background:#fff;border-radius:14px;border:1px solid var(--border);padding:26px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+    .config-card-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+    .config-card-icon{width:38px;height:38px;border-radius:10px;background:rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .config-title{font-size:15px;font-weight:700;color:var(--navy);}
+    .config-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6;}
+    .conn-status-box{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--cream);border-radius:10px;font-size:13px;border:1px solid var(--cream2);margin-bottom:10px;}
+    .step-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;min-width:28px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border-radius:50%;font-size:12px;font-weight:700;}
+    .setup-step{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--cream);border-radius:10px;margin-bottom:10px;font-size:13px;line-height:1.75;border:1px solid var(--cream2);}
+    .setup-step code{background:rgba(13,27,42,0.07);padding:2px 7px;border-radius:5px;font-size:12px;font-family:monospace;color:var(--navy);}
+    .setup-step a{color:var(--gold3);font-weight:600;text-decoration:none;}
+    .config-field{margin-bottom:16px;}
+    .config-field label{display:block;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;margin-bottom:6px;}
+    .config-field input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;outline:none;font-family:monospace;background:#FAFAF8;}
+    .config-field input:focus{border-color:var(--gold);}
+    .conn-test{display:flex;align-items:center;gap:10px;margin-top:6px;}
+    .conn-result{font-size:12px;font-weight:600;}
+    .conn-result.ok{color:var(--green);}
+    .conn-result.err{color:var(--red);}
+    .col-table{font-size:13px;border-collapse:collapse;width:100%;}
+    .col-table thead th{background:var(--cream);padding:9px 14px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.1em;border-bottom:2px solid var(--border);}
+    .col-table tbody td{padding:10px 14px;border-bottom:1px solid var(--border);}
+    .col-table tbody tr:last-child td{border-bottom:none;}
+    .col-letter{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(201,168,76,0.1);font-weight:700;font-size:12px;color:var(--gold3);font-family:'Cinzel',serif;}
+    .amount-val{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:var(--gold3);}
+
+    @media(max-width:1100px){.stats-row{grid-template-columns:1fr 1fr;}}
+    @media(max-width:900px){.sidebar{width:210px;}.main{margin-left:210px;}}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-shield"><img src="./images/logo.png" alt="PBFI" onerror="this.style.display='none'"></div>
+      <h2>Property Buyers Forum of India</h2>
+      <p>ADMIN DASHBOARD</p>
+      <div class="login-divider"></div>
+    </div>
+    <div class="login-field"><label>USERNAME</label><input id="loginUser" type="text" placeholder="PBFIadmin" autocomplete="username"></div>
+    <div class="login-field"><label>PASSWORD</label><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="login-btn" onclick="doLogin()">SIGN IN</button>
+    <div class="login-error" id="loginError">Invalid username or password.</div>
+    <div class="login-back"><a href="index.html">← Back to Website</a></div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADMIN SHELL ═══════════════ -->
+<div id="adminShell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-img"><img src="./images/logo.png" alt="PBFI" onerror="this.style.display='none'"></div>
+      <div>
+        <div class="sidebar-logo-name">PBFI Admin</div>
+        <div class="sidebar-logo-tag">PPBFI WELFARE FOUNDATION</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">MAIN MENU</div>
+
+      <!-- Dashboard -->
+      <div class="nav-item active" onclick="showPage('dashboard',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#3D3D3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Dashboard
+        <span class="nav-badge" id="sidebarBadge">0</span>
+      </div>
+
+      <!-- Enquiries -->
+      <div class="nav-item" onclick="showPage('enquiries',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#3D3D3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        All Enquiries
+      </div>
+
+      <!-- Members -->
+      <div class="nav-item" onclick="showPage('members',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#3D3D3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Members
+        <span class="nav-badge green-badge" id="sidebarMemberBadge">0</span>
+      </div>
+
+      <div class="sidebar-section-label" style="margin-top:8px">SETTINGS</div>
+
+      <!-- Setup -->
+      <div class="nav-item" onclick="showPage('setup',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="#3D3D3D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Setup &amp; Config
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank">
+        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        View Website
+      </a>
+      <a href="contact.html" target="_blank">
+        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact Form
+      </a>
+      <a href="membership.html" target="_blank">
+        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Membership Page
+      </a>
+      <a href="#" onclick="doLogout()" class="logout-link">
+        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">Dashboard</div>
+      <div class="topbar-right">
+        <span class="conn-pill disconnected" id="connStatus"><span class="conn-dot"></span>Not Connected</span>
+        <span class="new-pill" id="newBadge">0 New</span>
+        <button class="topbar-btn gold" onclick="loadAllData()">↻ Refresh</button>
+        <button class="topbar-btn" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ══ DASHBOARD ══ -->
+      <section id="pg-dashboard" class="active">
+        <div class="alert-banner" id="noSheetAlert">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div><strong>Google Sheet not connected.</strong> Go to <a href="#" onclick="showPage('setup',document.querySelectorAll('.nav-item')[3])" style="color:var(--gold3);font-weight:600">Setup &amp; Config</a> to paste your CSV URLs.</div>
+        </div>
+
+        <div style="font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.14em;margin-bottom:12px">ENQUIRIES</div>
+        <div class="stats-row" style="margin-bottom:28px">
+          <div class="stat-card gold">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="stat-card-label">TOTAL ENQUIRIES</div>
+            <div class="stat-card-value" id="st-total">—</div>
+            <div class="stat-card-sub">All time submissions</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <div class="stat-card-label">NEW (UNREAD)</div>
+            <div class="stat-card-value" id="st-new">—</div>
+            <div class="stat-card-sub">Awaiting response</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="stat-card-label">REPLIED</div>
+            <div class="stat-card-value" id="st-replied">—</div>
+            <div class="stat-card-sub">Responded to</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="stat-card-label">URGENT</div>
+            <div class="stat-card-value" id="st-urgent">—</div>
+            <div class="stat-card-sub">Needs immediate action</div>
+          </div>
+        </div>
+
+        <div style="font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.14em;margin-bottom:12px">MEMBERS</div>
+        <div class="stats-row" style="margin-bottom:28px">
+          <div class="stat-card gold">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="stat-card-label">TOTAL MEMBERS</div>
+            <div class="stat-card-value" id="ms-total">—</div>
+            <div class="stat-card-sub">All registrations</div>
+          </div>
+          <div class="stat-card teal">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="#2C7A7B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-card-label">PENDING VERIFICATION</div>
+            <div class="stat-card-value" id="ms-pending">—</div>
+            <div class="stat-card-sub">Awaiting payment check</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-card-label">ACTIVE MEMBERS</div>
+            <div class="stat-card-value" id="ms-active">—</div>
+            <div class="stat-card-sub">Verified &amp; active</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-card-icon">
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="stat-card-label">INSTITUTIONS</div>
+            <div class="stat-card-value" id="ms-institution">—</div>
+            <div class="stat-card-sub">Org memberships</div>
+          </div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:24px">
+          <div class="table-header">
+            <div><div class="table-title">Recent Enquiries</div><div class="table-sub">Last 5 submissions</div></div>
+            <button class="action-btn gold-btn" onclick="showPage('enquiries',document.querySelectorAll('.nav-item')[1])">View All</button>
+          </div>
+          <table>
+            <thead><tr><th>NAME</th><th>SUBJECT</th><th>CITY</th><th>DATE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+            <tbody id="recentBody"><tr class="loading-row"><td colspan="6">Loading…</td></tr></tbody>
+          </table>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div><div class="table-title">Recent Member Registrations</div><div class="table-sub">Last 5 submissions</div></div>
+            <button class="action-btn gold-btn" onclick="showPage('members',document.querySelectorAll('.nav-item')[2])">View All</button>
+          </div>
+          <table>
+            <thead><tr><th>NAME</th><th>CATEGORY</th><th>PLAN</th><th>AMOUNT</th><th>DATE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+            <tbody id="recentMembersBody"><tr class="loading-row"><td colspan="7">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══ ENQUIRIES ══ -->
+      <section id="pg-enquiries">
+        <div class="table-card">
+          <div class="table-header">
+            <div><div class="table-title">All Enquiries</div><div class="table-sub" id="enquiriesCount">—</div></div>
+            <div class="table-actions">
+              <div class="search-wrap">
+                <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" placeholder="Search name, email, phone…" id="searchBox" oninput="filterEnquiries()">
+              </div>
+              <select class="filter-select" id="statusFilter" onchange="filterEnquiries()"><option value="">All Status</option><option>New</option><option>Replied</option><option>Closed</option><option>Urgent</option></select>
+              <select class="filter-select" id="subjectFilter" onchange="filterEnquiries()"><option value="">All Subjects</option><option>Membership Enquiry</option><option>RERA Complaint Guidance</option><option>Property Dispute Support</option><option>Consultation Request</option><option>General Enquiry</option><option>Become a Coordinator</option><option>Other</option></select>
+              <button class="action-btn gold-btn" onclick="exportCSV('enquiries')">Export CSV</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>#</th><th>NAME / EMAIL</th><th>PHONE</th><th>SUBJECT</th><th>MESSAGE</th><th>CITY</th><th>DATE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+            <tbody id="allBody"><tr class="loading-row"><td colspan="9">Loading…</td></tr></tbody>
+          </table>
+          <div class="pagination"><span id="paginationInfo">Showing 0 entries</span><div class="page-btns" id="pageButtons"></div></div>
+        </div>
+      </section>
+
+      <!-- ══ MEMBERS ══ -->
+      <section id="pg-members">
+        <div class="table-card">
+          <div class="table-header">
+            <div><div class="table-title">All Members</div><div class="table-sub" id="membersCount">—</div></div>
+            <div class="table-actions">
+              <div class="search-wrap">
+                <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" placeholder="Search name, email, UTR…" id="memberSearchBox" oninput="filterMembers()">
+              </div>
+              <select class="filter-select" id="memberStatusFilter" onchange="filterMembers()"><option value="">All Status</option><option>Pending Verification</option><option>Active</option><option>Expired</option><option>Rejected</option></select>
+              <select class="filter-select" id="memberCategoryFilter" onchange="filterMembers()"><option value="">All Categories</option><option>Individual</option><option>Institution</option></select>
+              <select class="filter-select" id="memberPlanFilter" onchange="filterMembers()"><option value="">All Plans</option><option>Annual Membership</option><option>Lifetime Membership</option></select>
+              <button class="action-btn gold-btn" onclick="exportCSV('members')">Export CSV</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>#</th><th>NAME / EMAIL</th><th>PHONE</th><th>CATEGORY</th><th>PLAN</th><th>AMOUNT</th><th>TRANSACTION REF</th><th>PAYMENT DATE</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+            <tbody id="membersBody"><tr class="loading-row"><td colspan="10">Loading…</td></tr></tbody>
+          </table>
+          <div class="pagination"><span id="membersPaginationInfo">Showing 0 entries</span><div class="page-btns" id="membersPageButtons"></div></div>
+        </div>
+      </section>
+
+      <!-- ══ SETUP ══ -->
+      <section id="pg-setup">
+        <div class="config-card">
+          <div class="config-card-head">
+            <div class="config-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A07C2E" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div><div class="config-title">Connection Status</div></div>
+          </div>
+          <div class="config-sub">Live status of both Google Sheet data feeds.</div>
+          <div class="conn-status-box"><span style="font-weight:700;font-size:13px" id="setupConnStatus">Not configured — Enquiries</span><span style="color:var(--muted);font-size:12px" id="setupConnDetail">Paste CSV URL below.</span></div>
+          <div class="conn-status-box"><span style="font-weight:700;font-size:13px" id="setupMembersConnStatus">Not configured — Members</span><span style="color:var(--muted);font-size:12px" id="setupMembersConnDetail">Paste Members CSV URL below.</span></div>
+        </div>
+
+        <div class="config-card">
+          <div class="config-card-head">
+            <div class="config-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A07C2E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <div><div class="config-title">Setup Guide</div></div>
+          </div>
+          <div class="config-sub">Two Apps Scripts — one for Contact/Enquiries, one for Membership registrations.</div>
+          <div class="setup-step"><span class="step-badge">1</span><div>Enquiry form already set up — paste its Enquiries sheet CSV URL in Config below.</div></div>
+          <div class="setup-step"><span class="step-badge">2</span><div><strong>Membership Script:</strong> Open <a href="https://script.google.com" target="_blank">script.google.com</a> → New Project → paste <code>membership-script.gs</code> → run <code>setupMembersSheet()</code> once. Then Deploy → Web App → Anyone → copy URL → paste into <code>membership.html</code> as <code>MEMBERSHIP_SCRIPT_URL</code>.</div></div>
+          <div class="setup-step"><span class="step-badge">3</span><div><strong>Members CSV URL:</strong> In your Google Sheet, go to the <strong>Members</strong> tab → use:<br><code>https://docs.google.com/spreadsheets/d/<strong>SHEET_ID</strong>/export?format=csv&gid=<strong>MEMBERS_GID</strong></code><br>Get the GID from the tab URL (number after <code>#gid=</code>). Paste in Config below.</div></div>
+          <div class="setup-step"><span class="step-badge">4</span><div><strong>WhatsApp alerts (optional):</strong> WhatsApp <strong>+34 644 60 24 91</strong>: <code>I allow callmebot to send me messages</code> → paste API key into <code>WA_APIKEY</code> in both scripts → redeploy.</div></div>
+        </div>
+
+        <div class="config-card">
+          <div class="config-card-head">
+            <div class="config-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A07C2E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div><div class="config-title">Dashboard Configuration</div></div>
+          </div>
+          <div class="config-sub">Saved locally in your browser.</div>
+          <div class="config-field"><label>ENQUIRIES SHEET CSV URL</label><input id="cfg-sheet-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0"></div>
+          <div class="conn-test"><button class="action-btn" onclick="testConnection('enquiries')">Test Enquiries</button><span class="conn-result" id="connTestResult"></span></div>
+          <div class="config-field" style="margin-top:20px"><label>MEMBERS SHEET CSV URL</label><input id="cfg-members-url" type="text" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=MEMBERS_GID"></div>
+          <div class="conn-test"><button class="action-btn" onclick="testConnection('members')">Test Members</button><span class="conn-result" id="membersConnTestResult"></span></div>
+          <div class="config-field" style="margin-top:20px"><label>CHANGE ADMIN PASSWORD (blank = keep current)</label><input id="cfg-new-pass" type="password" placeholder="New password"></div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:6px"><button class="action-btn gold-btn" onclick="saveConfig()">Save Settings</button><span id="cfg-saved" style="font-size:13px;color:var(--green);display:none">Saved successfully</span></div>
+        </div>
+
+        <div class="config-card">
+          <div class="config-card-head">
+            <div class="config-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A07C2E" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div><div class="config-title">Members Sheet — Column Mapping</div></div>
+          </div>
+          <div class="config-sub">membership-script.gs writes these columns in order. The admin reads by column index, so exact header names don't matter.</div>
+          <table class="col-table">
+            <thead><tr><th>COL</th><th>FIELD</th><th>SOURCE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="col-letter">A</span></td><td>Timestamp</td><td style="color:var(--muted)">Auto-generated (IST)</td></tr>
+              <tr><td><span class="col-letter">B</span></td><td>Name</td><td style="color:var(--muted)">Membership form</td></tr>
+              <tr><td><span class="col-letter">C</span></td><td>Email</td><td style="color:var(--muted)">Membership form</td></tr>
+              <tr><td><span class="col-letter">D</span></td><td>Phone</td><td style="color:var(--muted)">Membership form</td></tr>
+              <tr><td><span class="col-letter">E</span></td><td>City / Location</td><td style="color:var(--muted)">Membership form</td></tr>
+              <tr><td><span class="col-letter">F</span></td><td>Category</td><td style="color:var(--muted)">Individual / Institution</td></tr>
+              <tr><td><span class="col-letter">G</span></td><td>Plan</td><td style="color:var(--muted)">Annual / Lifetime</td></tr>
+              <tr><td><span class="col-letter">H</span></td><td>Amount (INR)</td><td style="color:var(--muted)">Numeric value (e.g. 500)</td></tr>
+              <tr><td><span class="col-letter">I</span></td><td>Transaction Ref</td><td style="color:var(--muted)">UTR / UPI reference</td></tr>
+              <tr><td><span class="col-letter">J</span></td><td>Payment Date</td><td style="color:var(--muted)">Date entered by member</td></tr>
+              <tr><td><span class="col-letter">K</span></td><td>Notes</td><td style="color:var(--muted)">Optional notes</td></tr>
+              <tr><td><span class="col-letter">L</span></td><td>Status</td><td style="color:var(--muted)">Set to "Pending Verification"</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ── ENQUIRY MODAL ── -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <div><div class="modal-title">Enquiry Detail</div><div class="modal-subtitle" id="modalMeta">—</div></div>
+      <button class="modal-close" onclick="closeModalDirect('modalBackdrop')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modalBody"></div>
+      <div class="modal-msg-box" id="modalMsg"></div>
+      <div class="status-wrap"><label>UPDATE STATUS</label><select class="status-select" id="modalStatus" onchange="updateEnquiryStatus()"><option>New</option><option>Replied</option><option>Closed</option><option>Urgent</option></select></div>
+    </div>
+    <div class="modal-actions">
+      <a id="modalReplyBtn" href="#" class="action-btn gold-btn" style="text-decoration:none">Reply by Email</a>
+      <a id="modalWaBtn" href="#" class="action-btn" style="text-decoration:none;background:#128C7E;color:#fff">WhatsApp</a>
+      <button class="action-btn" style="background:var(--cream);color:var(--muted);border:1px solid var(--border)" onclick="closeModalDirect('modalBackdrop')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MEMBER MODAL ── -->
+<div class="modal-backdrop" id="memberModalBackdrop" onclick="closeMemberModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head" style="background:linear-gradient(135deg,#0A1628,#1B3A5C)">
+      <div><div class="modal-title">Member Registration</div><div class="modal-subtitle" id="memberModalMeta">—</div></div>
+      <button class="modal-close" onclick="closeModalDirect('memberModalBackdrop')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="memberModalBody"></div>
+      <div class="modal-msg-box" id="memberModalNotes" style="display:none"></div>
+      <div class="status-wrap">
+        <label>UPDATE STATUS</label>
+        <select class="status-select" id="memberModalStatus" onchange="updateMemberStatus()">
+          <option>Pending Verification</option><option>Active</option><option>Expired</option><option>Rejected</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <a id="memberModalReplyBtn" href="#" class="action-btn gold-btn" style="text-decoration:none">Email Member</a>
+      <a id="memberModalWaBtn" href="#" class="action-btn" style="text-decoration:none;background:#128C7E;color:#fff">WhatsApp</a>
+      <button class="action-btn" style="background:var(--cream);color:var(--muted);border:1px solid var(--border)" onclick="closeModalDirect('memberModalBackdrop')">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var ADMIN_CREDS = { username:'admin', password:'12345' };
+var STATE = {
+  enquiries: { rows:[], filtered:[], statuses:{}, currentPage:1, perPage:15, activeRow:null, connected:false },
+  members:   { rows:[], filtered:[], statuses:{}, currentPage:1, perPage:15, activeRow:null, connected:false }
+};
+
+// ── AUTH ───────────────────────────────────────────────────────────────────
+function doLogin(){
+  var u=document.getElementById('loginUser').value.trim(), p=document.getElementById('loginPass').value;
+  var sp=localStorage.getItem('PBFI_admin_pass');
+  if(u===ADMIN_CREDS.username && p===(sp||ADMIN_CREDS.password)){
+    sessionStorage.setItem('PBFI_admin','1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminShell').style.display='block';
+    init();
+  } else { document.getElementById('loginError').style.display='block'; }
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none') doLogin(); });
+function doLogout(){ sessionStorage.removeItem('PBFI_admin'); document.getElementById('adminShell').style.display='none'; document.getElementById('loginScreen').style.display='flex'; document.getElementById('loginPass').value=''; }
+window.addEventListener('DOMContentLoaded',function(){ if(sessionStorage.getItem('PBFI_admin')){ document.getElementById('loginScreen').style.display='none'; document.getElementById('adminShell').style.display='block'; init(); } });
+function init(){ loadConfig(); loadAllData(); }
+
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
+function showPage(id, navEl){
+  document.querySelectorAll('.page-content>section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  if(navEl) navEl.classList.add('active');
+  document.getElementById('pageTitle').textContent=({dashboard:'Dashboard',enquiries:'All Enquiries',members:'Members',setup:'Setup & Config'})[id]||id;
+}
+
+// ── DATA LOADING ────────────────────────────────────────────────────────────
+function loadAllData(){ loadEnquiriesData(); loadMembersData(); }
+
+function loadEnquiriesData(){
+  var url=localStorage.getItem('PBFI_sheet_url');
+  if(!url){ setConnected('enquiries',false); setEnquiryPlaceholder(); return; }
+  var fixedUrl=autoFixUrl(url);
+  if(fixedUrl!==url){ localStorage.setItem('PBFI_sheet_url',fixedUrl); url=fixedUrl; var el=document.getElementById('cfg-sheet-url'); if(el) el.value=fixedUrl; }
+  // Show loading state
+  document.getElementById('recentBody').innerHTML='<tr class="loading-row"><td colspan="6">Loading…</td></tr>';
+  document.getElementById('allBody').innerHTML='<tr class="loading-row"><td colspan="9">Loading…</td></tr>';
+  fetch(url+'&t='+Date.now())
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.text();
+    })
+    .then(function(text){
+      if(!isValidCsv(text)){ setConnected('enquiries',false); showEnquiryError('Invalid CSV — check your Sheet is published and URL is correct.'); return; }
+      STATE.enquiries.rows=parseEnquiriesCSV(text);
+      setConnected('enquiries',true); renderAll();
+    })
+    .catch(function(err){
+      setConnected('enquiries',false);
+      showEnquiryError('Could not load data. '+(err.message||'Check URL and Sheet sharing settings.'));
+    });
+}
+
+function loadMembersData(){
+  var url=localStorage.getItem('PBFI_members_url');
+  if(!url){ setConnected('members',false); setMembersPlaceholder(); return; }
+  var fixedUrl=autoFixUrl(url);
+  if(fixedUrl!==url){ localStorage.setItem('PBFI_members_url',fixedUrl); url=fixedUrl; var el=document.getElementById('cfg-members-url'); if(el) el.value=fixedUrl; }
+  // Show loading state — never fall back to placeholder when a URL exists
+  document.getElementById('recentMembersBody').innerHTML='<tr class="loading-row"><td colspan="7">Loading…</td></tr>';
+  document.getElementById('membersBody').innerHTML='<tr class="loading-row"><td colspan="10">Loading…</td></tr>';
+  fetch(url+'&t='+Date.now())
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.text();
+    })
+    .then(function(text){
+      if(!isValidCsv(text)){ setConnected('members',false); showMembersError('Invalid CSV — check your Members Sheet is published and the GID is correct.'); return; }
+      STATE.members.rows=parseMembersCSV(text);
+      setConnected('members',true);
+      // Update filtered and re-render only members sections
+      STATE.members.filtered=STATE.members.rows.slice();
+      renderMemberStats();
+      renderRecentMembers();
+      renderMembersTable();
+    })
+    .catch(function(err){
+      setConnected('members',false);
+      showMembersError('Could not load members. '+(err.message||'Check URL and that the sheet is shared publicly.'));
+    });
+}
+
+function showEnquiryError(msg){
+  STATE.enquiries.rows=[];
+  document.getElementById('recentBody').innerHTML='<tr class="empty-row"><td colspan="6" style="color:var(--red)">'+msg+'</td></tr>';
+  document.getElementById('allBody').innerHTML='<tr class="empty-row"><td colspan="9" style="color:var(--red)">'+msg+'</td></tr>';
+  renderEnquiryStats();
+}
+function showMembersError(msg){
+  STATE.members.rows=[];
+  document.getElementById('recentMembersBody').innerHTML='<tr class="empty-row"><td colspan="7" style="color:var(--red)">'+msg+'</td></tr>';
+  document.getElementById('membersBody').innerHTML='<tr class="empty-row"><td colspan="10" style="color:var(--red)">'+msg+'</td></tr>';
+  renderMemberStats();
+}
+
+// ── CSV UTILITIES ───────────────────────────────────────────────────────────
+function extractSheetId(url){ var m=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/); return m?m[1]:null; }
+function buildCsvUrl(sheetId,gid){ return'https://docs.google.com/spreadsheets/d/'+sheetId+'/export?format=csv&gid='+(gid||'0'); }
+function isValidCsv(text){ if(!text||text.length<5) return false; if(/^TSD|^\s*%\[|^\s*\[\[/.test(text)) return false; return text.trim().split('\n')[0].includes(','); }
+function autoFixUrl(url){ url=url.trim(); if(/output=csv|format=csv/.test(url)) return url; var id=extractSheetId(url); if(id){ var g=url.match(/[?&]gid=(\d+)/); return buildCsvUrl(id,g?g[1]:'0'); } return url; }
+
+function splitCSV(line){
+  var res=[],cur='',inQ=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(c==='"'){ inQ=!inQ; }
+    else if(c===','&&!inQ){ res.push(cur.trim()); cur=''; }
+    else{ cur+=c; }
+  }
+  res.push(cur.trim()); return res;
+}
+
+// ── HEADER-AWARE CSV PARSING ─────────────────────────────────────────────
+// Maps header names (flexible) → column indices so the order of headers in
+// the sheet doesn't matter, and renamed headers still work.
+function buildHeaderMap(headerRow){
+  var cols=splitCSV(headerRow);
+  var map={};
+  cols.forEach(function(h,i){
+    var key=h.toLowerCase().replace(/[^a-z0-9]/g,'');
+    map[key]=i;
+  });
+  return { cols:cols, get:function(names){
+    for(var j=0;j<names.length;j++){
+      var k=names[j].toLowerCase().replace(/[^a-z0-9]/g,'');
+      if(k in map) return map[k];
+    }
+    return -1;
+  }};
+}
+
+function parseEnquiriesCSV(text){
+  var lines=text.trim().split('\n');
+  if(lines.length<2) return [];
+  var hm=buildHeaderMap(lines[0]);
+  var iDate =hm.get(['Timestamp','Date','date']);
+  var iName =hm.get(['Name','name','fullname','fullName']);
+  var iEmail=hm.get(['Email','E-Mail','email','mail']);
+  var iPhone=hm.get(['Phone','PhoneNumber','phone','mobile','contact']);
+  var iSubj =hm.get(['Subject','subject']);
+  var iCity =hm.get(['City','Location','city','location','state']);
+  var iMsg  =hm.get(['Message','message','query','details']);
+  var iStat =hm.get(['Status','status']);
+  return lines.slice(1).map(function(line,i){
+    var c=splitCSV(line);
+    var g=function(idx){ return idx>=0&&idx<c.length?c[idx]||'':''; };
+    return { _idx:i,id:i+1, date:g(iDate>=0?iDate:0), name:g(iName>=0?iName:1), email:g(iEmail>=0?iEmail:2), phone:g(iPhone>=0?iPhone:3), subject:g(iSubj>=0?iSubj:4), city:g(iCity>=0?iCity:5), message:g(iMsg>=0?iMsg:6), status:STATE.enquiries.statuses[i]||(g(iStat>=0?iStat:7)||'New') };
+  }).reverse();
+}
+
+function parseMembersCSV(text){
+  // Cols written by membership-script.gs (by index, headers may vary):
+  // 0:Timestamp 1:Name 2:Email 3:Phone 4:City 5:Category 6:Plan 7:Amount 8:TransactionRef 9:PaymentDate 10:Notes 11:Status
+  var lines=text.trim().split('\n');
+  if(lines.length<2) return [];
+  var hm=buildHeaderMap(lines[0]);
+  var iDate =hm.get(['Timestamp','Date','date','time']);
+  var iName =hm.get(['Name','name','fullname','orgname']);
+  var iEmail=hm.get(['Email','E-Mail','email','mail']);
+  var iPhone=hm.get(['Phone','PhoneNumber','phone','mobile','phonenumber']);
+  var iCity =hm.get(['City','Location','city','location','state','citystate']);
+  var iCat  =hm.get(['Category','category','membertype','type']);
+  var iPlan =hm.get(['Plan','plan','membership','membershipplan']);
+  var iAmt  =hm.get(['Amount','amount','amountinr','fee','price']);
+  var iUTR  =hm.get(['TransactionRef','Transaction','UTR','utr','txnid','transactionref','transactionreference']);
+  var iPDate=hm.get(['PaymentDate','DateofPayment','paymentdate','dateofpayment','paiddate']);
+  var iNotes=hm.get(['Notes','notes','remarks','additionalinfo','additionals']);
+  var iStat =hm.get(['Status','status']);
+
+  // Fallback to positional if header not found
+  var fi=function(detected,fallback){ return detected>=0?detected:fallback; };
+
+  return lines.slice(1).map(function(line,i){
+    var c=splitCSV(line);
+    var g=function(idx){ return idx>=0&&idx<c.length?c[idx]||'':''; };
+    return {
+      _idx:i, id:i+1,
+      date    : g(fi(iDate,0)),
+      name    : g(fi(iName,1)),
+      email   : g(fi(iEmail,2)),
+      phone   : g(fi(iPhone,3)),
+      city    : g(fi(iCity,4)),
+      category: g(fi(iCat,5)),
+      plan    : g(fi(iPlan,6)),
+      amount  : g(fi(iAmt,7)),
+      utr     : g(fi(iUTR,8)),
+      payDate : g(fi(iPDate,9)),
+      notes   : g(fi(iNotes,10)),
+      status  : STATE.members.statuses[i]||(g(fi(iStat,11))||'Pending Verification')
+    };
+  }).reverse();
+}
+
+// ── PLACEHOLDER DATA ─────────────────────────────────────────────────────────
+function setEnquiryPlaceholder(){
+  STATE.enquiries.rows=[
+    {_idx:0,id:1,date:'01-Apr-2025 10:22',name:'Ravi Kumar',email:'ravi@example.com',phone:'+91 98765 43210',subject:'RERA Complaint Guidance',city:'Chennai, TN',message:'Complaint against builder for 3-year delay.',status:'New'},
+    {_idx:1,id:2,date:'31-Mar-2025 14:05',name:'Priya Sharma',email:'priya@example.com',phone:'+91 87654 32109',subject:'Membership Enquiry',city:'Mumbai, MH',message:'Would like to know more about membership.',status:'Replied'},
+  ]; renderAll();
+}
+function setMembersPlaceholder(){
+  STATE.members.rows=[
+    {_idx:0,id:1,date:'02-Apr-2025 09:10',name:'Ajay Nair',email:'ajay@example.com',phone:'+91 98001 12345',city:'Kochi, KL',category:'Individual',plan:'Annual Membership',amount:'500',utr:'UTIB25040199999',payDate:'2025-04-01',notes:'',status:'Pending Verification'},
+    {_idx:1,id:2,date:'01-Apr-2025 15:30',name:'ABC RWA Society',email:'rwa@example.com',phone:'+91 44001 55555',city:'Chennai, TN',category:'Institution',plan:'Lifetime Membership',amount:'10000',utr:'AXISIMP202504010001',payDate:'2025-04-01',notes:'Representing 200+ flat owners',status:'Active'},
+  ]; renderAll();
+}
+
+// ── CONNECTION STATUS ────────────────────────────────────────────────────────
+function setConnected(type,on){
+  if(type==='enquiries'){
+    STATE.enquiries.connected=on;
+    var el=document.getElementById('setupConnStatus'), el2=document.getElementById('setupConnDetail');
+    if(on){ el.textContent='Connected — Enquiries'; el.style.color='var(--green)'; el2.textContent='Live data from Enquiries sheet.'; document.getElementById('noSheetAlert').classList.remove('show'); }
+    else  { el.textContent='Not connected — Enquiries'; el.style.color='var(--red)'; el2.textContent='Paste Enquiries CSV URL in config.'; document.getElementById('noSheetAlert').classList.add('show'); }
+  } else {
+    STATE.members.connected=on;
+    var em=document.getElementById('setupMembersConnStatus'), em2=document.getElementById('setupMembersConnDetail');
+    if(on){ em.textContent='Connected — Members'; em.style.color='var(--green)'; em2.textContent='Live data from Members sheet.'; }
+    else  { em.textContent='Not connected — Members'; em.style.color='var(--red)'; em2.textContent='Paste Members CSV URL in config.'; }
+  }
+  updateTopbarConn();
+}
+function updateTopbarConn(){
+  var enq=STATE.enquiries.connected, mem=STATE.members.connected;
+  var el=document.getElementById('connStatus');
+  if(enq&&mem){ el.innerHTML='<span class="conn-dot"></span>Both Connected'; el.className='conn-pill connected'; }
+  else if(enq||mem){ el.innerHTML='<span class="conn-dot"></span>Partial'; el.className='conn-pill connected'; }
+  else{ el.innerHTML='<span class="conn-dot"></span>Not Connected'; el.className='conn-pill disconnected'; }
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function renderAll(){
+  renderEnquiryStats(); renderMemberStats();
+  renderRecentEnquiries(); renderRecentMembers();
+  STATE.enquiries.filtered=STATE.enquiries.rows.slice(); renderEnquiriesTable();
+  STATE.members.filtered=STATE.members.rows.slice(); renderMembersTable();
+}
+function renderEnquiryStats(){
+  var r=STATE.enquiries.rows;
+  document.getElementById('st-total').textContent=r.length;
+  document.getElementById('st-new').textContent=r.filter(x=>x.status==='New').length;
+  document.getElementById('st-replied').textContent=r.filter(x=>x.status==='Replied').length;
+  document.getElementById('st-urgent').textContent=r.filter(x=>x.status==='Urgent').length;
+  var n=r.filter(x=>x.status==='New').length;
+  document.getElementById('newBadge').textContent=n+' New';
+  document.getElementById('sidebarBadge').textContent=n;
+}
+function renderMemberStats(){
+  var r=STATE.members.rows;
+  document.getElementById('ms-total').textContent=r.length;
+  document.getElementById('ms-pending').textContent=r.filter(x=>x.status==='Pending Verification').length;
+  document.getElementById('ms-active').textContent=r.filter(x=>x.status==='Active').length;
+  document.getElementById('ms-institution').textContent=r.filter(x=>(x.category||'').toLowerCase()==='institution').length;
+  document.getElementById('sidebarMemberBadge').textContent=r.filter(x=>x.status==='Pending Verification').length;
+}
+function renderRecentEnquiries(){
+  var tbody=document.getElementById('recentBody'),rows=STATE.enquiries.rows.slice(0,5);
+  if(!rows.length){tbody.innerHTML='<tr class="empty-row"><td colspan="6">No enquiries yet.</td></tr>';return;}
+  tbody.innerHTML=rows.map((r,i)=>'<tr><td><div class="td-name">'+esc(r.name)+'</div></td><td>'+esc(r.subject)+'</td><td>'+esc(r.city)+'</td><td style="font-size:12px;color:var(--muted)">'+(r.date.split(' ')[0]||r.date)+'</td><td><span class="badge badge-'+bc(r.status)+'">'+r.status+'</span></td><td><button class="row-btn" onclick="openEnquiryModal('+i+',true)">View</button></td></tr>').join('');
+}
+function renderRecentMembers(){
+  var tbody=document.getElementById('recentMembersBody'),rows=STATE.members.rows.slice(0,5);
+  if(!rows.length){tbody.innerHTML='<tr class="empty-row"><td colspan="7">No members yet.</td></tr>';return;}
+  tbody.innerHTML=rows.map((r,i)=>'<tr><td><div class="td-name">'+esc(r.name)+'</div><div class="td-email">'+esc(r.email)+'</div></td><td><span class="badge badge-'+(r.category||'').toLowerCase()+'">'+esc(r.category)+'</span></td><td>'+esc(r.plan)+'</td><td><span class="amount-val">₹'+esc(r.amount)+'</span></td><td style="font-size:12px;color:var(--muted)">'+(r.date.split(' ')[0]||r.date)+'</td><td><span class="badge badge-'+mbc(r.status)+'">'+r.status+'</span></td><td><button class="row-btn activate-btn" onclick="openMemberModal('+i+',true)">View</button></td></tr>').join('');
+}
+function renderEnquiriesTable(){
+  var tbody=document.getElementById('allBody'),start=(STATE.enquiries.currentPage-1)*15,slice=STATE.enquiries.filtered.slice(start,start+15),total=STATE.enquiries.filtered.length;
+  document.getElementById('enquiriesCount').textContent=total+' total enquiries';
+  if(!slice.length){tbody.innerHTML='<tr class="empty-row"><td colspan="9">No enquiries found.</td></tr>';document.getElementById('paginationInfo').textContent='Showing 0 entries';document.getElementById('pageButtons').innerHTML='';return;}
+  tbody.innerHTML=slice.map((r,i)=>{var abs=start+i;return'<tr><td style="color:var(--muted);font-size:11px">'+r.id+'</td><td><div class="td-name">'+esc(r.name)+'</div><div class="td-email">'+esc(r.email)+'</div></td><td style="font-size:12px">'+esc(r.phone||'—')+'</td><td style="font-size:12px">'+esc(r.subject)+'</td><td class="td-msg" title="'+esc(r.message)+'">'+esc(r.message)+'</td><td style="font-size:12px">'+esc(r.city||'—')+'</td><td style="font-size:11px;color:var(--muted)">'+(r.date.split(' ')[0]||r.date)+'</td><td><span class="badge badge-'+bc(r.status)+'">'+r.status+'</span></td><td><div class="row-actions"><button class="row-btn" onclick="openEnquiryModal('+abs+',false)">View</button><a class="row-btn" href="mailto:'+esc(r.email)+'" style="text-decoration:none">Reply</a>'+(r.phone?'<a class="row-btn" href="https://wa.me/'+waNum(r.phone)+'" target="_blank" style="text-decoration:none">WA</a>':'')+'</div></td></tr>';}).join('');
+  renderPagination('enquiries',total,STATE.enquiries.currentPage,'pageButtons','paginationInfo',start);
+}
+function renderMembersTable(){
+  var tbody=document.getElementById('membersBody'),start=(STATE.members.currentPage-1)*15,slice=STATE.members.filtered.slice(start,start+15),total=STATE.members.filtered.length;
+  document.getElementById('membersCount').textContent=total+' total members';
+  if(!slice.length){tbody.innerHTML='<tr class="empty-row"><td colspan="10">No members found.</td></tr>';document.getElementById('membersPaginationInfo').textContent='Showing 0 entries';document.getElementById('membersPageButtons').innerHTML='';return;}
+  tbody.innerHTML=slice.map((r,i)=>{var abs=start+i;return'<tr><td style="color:var(--muted);font-size:11px">'+r.id+'</td><td><div class="td-name">'+esc(r.name)+'</div><div class="td-email">'+esc(r.email)+'</div></td><td style="font-size:12px">'+esc(r.phone||'—')+'</td><td><span class="badge badge-'+(r.category||'').toLowerCase()+'">'+esc(r.category)+'</span></td><td style="font-size:12px">'+esc(r.plan)+'</td><td><span class="amount-val">₹'+esc(r.amount)+'</span></td><td style="font-size:11px;color:var(--muted);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.utr||'—')+'</td><td style="font-size:12px">'+esc(r.payDate||'—')+'</td><td><span class="badge badge-'+mbc(r.status)+'">'+r.status+'</span></td><td><div class="row-actions"><button class="row-btn activate-btn" onclick="openMemberModal('+abs+',false)">View</button><a class="row-btn" href="mailto:'+esc(r.email)+'" style="text-decoration:none">Email</a>'+(r.phone?'<a class="row-btn" href="https://wa.me/'+waNum(r.phone)+'" target="_blank" style="text-decoration:none">WA</a>':'')+'</div></td></tr>';}).join('');
+  renderPagination('members',total,STATE.members.currentPage,'membersPageButtons','membersPaginationInfo',start);
+}
+function renderPagination(type,total,currentPage,btnId,infoId,start){
+  var perPage=15,pages=Math.ceil(total/perPage);
+  document.getElementById(infoId).textContent='Showing '+(start+1)+'–'+Math.min(start+perPage,total)+' of '+total+' entries';
+  document.getElementById(btnId).innerHTML=Array.from({length:pages},(_,i)=>'<button class="page-btn'+(i+1===currentPage?' active':'')+'" onclick="goPage(\''+type+'\','+(i+1)+')">'+(i+1)+'</button>').join('');
+}
+function goPage(type,n){ STATE[type].currentPage=n; type==='enquiries'?renderEnquiriesTable():renderMembersTable(); }
+
+function filterEnquiries(){
+  var q=document.getElementById('searchBox').value.toLowerCase(),st=document.getElementById('statusFilter').value,sb=document.getElementById('subjectFilter').value;
+  STATE.enquiries.filtered=STATE.enquiries.rows.filter(r=>{ var mq=!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)||r.phone.includes(q)||r.city.toLowerCase().includes(q); return mq&&(!st||r.status===st)&&(!sb||r.subject===sb); });
+  STATE.enquiries.currentPage=1; renderEnquiriesTable();
+}
+function filterMembers(){
+  var q=document.getElementById('memberSearchBox').value.toLowerCase(),st=document.getElementById('memberStatusFilter').value,cat=document.getElementById('memberCategoryFilter').value,plan=document.getElementById('memberPlanFilter').value;
+  STATE.members.filtered=STATE.members.rows.filter(r=>{ var mq=!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)||(r.utr||'').toLowerCase().includes(q)||r.phone.includes(q); return mq&&(!st||r.status===st)&&(!cat||r.category===cat)&&(!plan||r.plan===plan); });
+  STATE.members.currentPage=1; renderMembersTable();
+}
+
+// ── MODALS ────────────────────────────────────────────────────────────────────
+function openEnquiryModal(idx,fromRecent){
+  var r=fromRecent?STATE.enquiries.rows[idx]:STATE.enquiries.filtered[idx]; if(!r) return;
+  STATE.enquiries.activeRow=r;
+  document.getElementById('modalMeta').textContent=r.date+' · '+r.city;
+  document.getElementById('modalBody').innerHTML=mrow('Name',esc(r.name))+mrow('Email','<a href="mailto:'+esc(r.email)+'" style="color:var(--gold3)">'+esc(r.email)+'</a>')+mrow('Phone',esc(r.phone||'—'))+mrow('Subject','<strong>'+esc(r.subject)+'</strong>')+mrow('City',esc(r.city||'—'));
+  document.getElementById('modalMsg').textContent=r.message;
+  document.getElementById('modalStatus').value=r.status;
+  document.getElementById('modalReplyBtn').href='mailto:'+r.email+'?subject='+encodeURIComponent('Re: Your PBFI Enquiry — '+r.subject)+'&body='+encodeURIComponent('Dear '+r.name+',\n\nThank you for contacting Property Buyers Forum of India.\n\n');
+  var wa=waNum(r.phone); document.getElementById('modalWaBtn').href=wa?'https://wa.me/'+wa+'?text='+encodeURIComponent('Dear '+r.name+', thank you for contacting PBFI.'):'#';
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+function openMemberModal(idx,fromRecent){
+  var r=fromRecent?STATE.members.rows[idx]:STATE.members.filtered[idx]; if(!r) return;
+  STATE.members.activeRow=r;
+  document.getElementById('memberModalMeta').textContent=r.date+' · '+r.city;
+  document.getElementById('memberModalBody').innerHTML=mrow('Name',esc(r.name))+mrow('Email','<a href="mailto:'+esc(r.email)+'" style="color:var(--gold3)">'+esc(r.email)+'</a>')+mrow('Phone',esc(r.phone||'—'))+mrow('City',esc(r.city||'—'))+mrow('Category','<span class="badge badge-'+(r.category||'').toLowerCase()+'">'+esc(r.category)+'</span>')+mrow('Plan',esc(r.plan))+mrow('Amount','<span class="amount-val">₹'+esc(r.amount)+'</span>')+mrow('Transaction Ref','<code style="font-size:12px;background:var(--cream);padding:2px 6px;border-radius:4px">'+esc(r.utr||'—')+'</code>')+mrow('Payment Date',esc(r.payDate||'—'));
+  if(r.notes){var nb=document.getElementById('memberModalNotes');nb.textContent=r.notes;nb.style.display='block';}else{document.getElementById('memberModalNotes').style.display='none';}
+  document.getElementById('memberModalStatus').value=r.status;
+  document.getElementById('memberModalReplyBtn').href='mailto:'+r.email+'?subject='+encodeURIComponent('PBFI Membership — '+r.plan)+'&body='+encodeURIComponent('Dear '+r.name+',\n\nYour PBFI membership registration has been received.\n\n');
+  var wa=waNum(r.phone); document.getElementById('memberModalWaBtn').href=wa?'https://wa.me/'+wa+'?text='+encodeURIComponent('Dear '+r.name+', your PBFI membership registration has been received.'):'#';
+  document.getElementById('memberModalBackdrop').classList.add('open');
+}
+function mrow(l,v){ return'<div class="modal-row"><div class="modal-label">'+l+'</div><div class="modal-val">'+v+'</div></div>'; }
+function updateEnquiryStatus(){ var r=STATE.enquiries.activeRow; if(!r) return; r.status=document.getElementById('modalStatus').value; STATE.enquiries.statuses[r._idx]=r.status; saveStatuses(); renderAll(); }
+function updateMemberStatus()  { var r=STATE.members.activeRow;   if(!r) return; r.status=document.getElementById('memberModalStatus').value; STATE.members.statuses[r._idx]=r.status; saveMemberStatuses(); renderAll(); }
+function closeModal(e){ if(e.target===document.getElementById('modalBackdrop')) closeModalDirect('modalBackdrop'); }
+function closeMemberModal(e){ if(e.target===document.getElementById('memberModalBackdrop')) closeModalDirect('memberModalBackdrop'); }
+function closeModalDirect(id){ document.getElementById(id).classList.remove('open'); }
+
+// ── CONFIG ───────────────────────────────────────────────────────────────────
+function loadConfig(){
+  var url=localStorage.getItem('PBFI_sheet_url'); if(url) document.getElementById('cfg-sheet-url').value=url;
+  var murl=localStorage.getItem('PBFI_members_url'); if(murl) document.getElementById('cfg-members-url').value=murl;
+  try{ STATE.enquiries.statuses=JSON.parse(localStorage.getItem('PBFI_statuses')||'{}'); }catch(e){}
+  try{ STATE.members.statuses=JSON.parse(localStorage.getItem('PBFI_member_statuses')||'{}'); }catch(e){}
+}
+function saveStatuses(){ localStorage.setItem('PBFI_statuses',JSON.stringify(STATE.enquiries.statuses)); }
+function saveMemberStatuses(){ localStorage.setItem('PBFI_member_statuses',JSON.stringify(STATE.members.statuses)); }
+function saveConfig(){
+  var url=document.getElementById('cfg-sheet-url').value.trim();
+  var murl=document.getElementById('cfg-members-url').value.trim();
+  var pass=document.getElementById('cfg-new-pass').value.trim();
+  if(url) localStorage.setItem('PBFI_sheet_url',url);
+  if(murl) localStorage.setItem('PBFI_members_url',murl);
+  if(pass){ localStorage.setItem('PBFI_admin_pass',pass); document.getElementById('cfg-new-pass').value=''; }
+  var s=document.getElementById('cfg-saved'); s.style.display='inline'; setTimeout(()=>s.style.display='none',2500);
+  loadAllData();
+}
+function testConnection(type){
+  var inputId=type==='enquiries'?'cfg-sheet-url':'cfg-members-url';
+  var resultId=type==='enquiries'?'connTestResult':'membersConnTestResult';
+  var rawUrl=document.getElementById(inputId).value.trim();
+  var res=document.getElementById(resultId);
+  if(!rawUrl){ res.className='conn-result err'; res.textContent='No URL entered'; return; }
+  var url=autoFixUrl(rawUrl);
+  if(url!==rawUrl){ document.getElementById(inputId).value=url; }
+  res.className='conn-result'; res.textContent='Testing…';
+  fetch(url+'&t='+Date.now()).then(r=>r.text()).then(function(t){
+    if(isValidCsv(t)){ var lc=t.trim().split('\n').length-1; res.className='conn-result ok'; res.textContent='Connected! '+lc+' rows found.'; document.getElementById(inputId).value=url; }
+    else{ res.className='conn-result err'; var sid=extractSheetId(rawUrl); if(sid){ var fx=buildCsvUrl(sid,'0'); document.getElementById(inputId).value=fx; res.textContent='Auto-corrected URL — click Save & retry.'; } else{ res.textContent='Wrong format — see Step 3 guide above.'; } }
+  }).catch(function(){ res.className='conn-result err'; res.textContent='Could not reach URL.'; });
+}
+
+// ── EXPORT ────────────────────────────────────────────────────────────────────
+function exportCSV(type){
+  var rows, filename;
+  if(type==='enquiries'){
+    rows=[['Date','Name','Email','Phone','Subject','City','Message','Status']].concat(STATE.enquiries.filtered.map(r=>[r.date,r.name,r.email,r.phone,r.subject,r.city,r.message,r.status].map(v=>'"'+(v||'').replace(/"/g,'""')+'"')));
+    filename='PBFI-Enquiries-'+new Date().toISOString().slice(0,10)+'.csv';
+  } else {
+    rows=[['Date','Name','Email','Phone','City','Category','Plan','Amount','Transaction Ref','Payment Date','Notes','Status']].concat(STATE.members.filtered.map(r=>[r.date,r.name,r.email,r.phone,r.city,r.category,r.plan,r.amount,r.utr,r.payDate,r.notes,r.status].map(v=>'"'+(v||'').replace(/"/g,'""')+'"')));
+    filename='PBFI-Members-'+new Date().toISOString().slice(0,10)+'.csv';
+  }
+  var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(rows.map(r=>r.join(',')).join('\n')); a.download=filename; a.click();
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function bc(s){ return({New:'new',Replied:'replied',Closed:'closed',Urgent:'urgent'})[s]||'new'; }
+function mbc(s){ return({'Pending Verification':'pending',Active:'active',Expired:'expired',Rejected:'urgent'})[s]||'pending'; }
+function waNum(p){ if(!p) return''; var n=p.replace(/[^0-9]/g,''); return n.startsWith('91')?n:'91'+n; }
+</script>
+</body>
+</html>

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Membership Plans — Property Property Property Property Buyers Forum of India | Join PBFI</title>
+  <meta name="description" content="Join Property Property Buyers Forum of India as an Individual or Institutional member. Annual and Lifetime plans available. Get RERA guidance, legal support, and expert consultation.">
+  <meta name="keywords" content="PBFI membership, property buyer membership India, RERA legal membership, Property Buyers forum membership plans, property protection plan India">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.Property Buyersforumofindia.org/membership.html">
+  <meta property="og:title" content="Membership Plans — Property Property Buyers Forum of India | Join PBFI">
+  <meta property="og:description" content="Join Property Property Buyers Forum of India. Individual & Institutional plans, Annual & Lifetime options available.">
+  <meta property="og:url" content="https://www.Property Buyersforumofindia.org/membership.html">
+  <meta property="og:image" content="https://www.Property Buyersforumofindia.org/images/logo.png">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── MEMBERSHIP PAGE ── */
+
+    /* PLAN GRID */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 960px;
+      margin: 0 auto 1.5rem;
+    }
+    @media(max-width:700px){ .plans-grid{ grid-template-columns:1fr; } }
+
+    /* ── FIX 1: larger group labels ── */
+    .plan-group-label {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;               /* was 10px */
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      margin-bottom: 1rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .plan-group-label.individual { color: #C9A84C; }
+    .plan-group-label.institution { color: #1B3A5C; }
+
+    /* ── FIX 2: every card gets a visible border ── */
+    .plan-card {
+      border-radius: 14px;
+      padding: 2rem 1.75rem;
+      cursor: pointer;
+      border: 2px solid rgba(13,27,42,0.18);   /* was 'transparent' */
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(13,27,42,0.07); /* subtle lift on all cards */
+    }
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      background: linear-gradient(135deg, rgba(201,168,76,0.04), transparent);
+    }
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(13,27,42,0.12);
+      border-color: rgba(201,168,76,0.5);       /* gold tint on hover */
+    }
+    .plan-card.selected {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15), 0 18px 40px rgba(13,27,42,0.14);
+      background: #fffdf5;
+    }
+    .plan-card.selected::before { opacity: 1; }
+
+    .plan-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
+    .plan-radio {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid rgba(13,27,42,0.25);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 3px; transition: border-color 0.2s;
+    }
+    .plan-card.selected .plan-radio { border-color: #C9A84C; }
+    .plan-radio-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: #C9A84C; opacity: 0; transform: scale(0.4);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .plan-card.selected .plan-radio-dot { opacity: 1; transform: scale(1); }
+
+    .plan-details { flex: 1; }
+
+    /* ── FIX 1: larger badges ── */
+    .plan-type-badge {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;               /* was 9px */
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 11px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+    }
+    .plan-type-badge.annual   { background: rgba(13,27,42,0.07); color: #0D1B2A; }
+    .plan-type-badge.lifetime { background: rgba(201,168,76,0.15); color: #7A5E1A; }
+
+    /* ── FIX 1: larger price ── */
+    .plan-price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 10px; }
+    .plan-price-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 46px;               /* was 38px */
+      font-weight: 700;
+      color: #0D1B2A;
+      line-height: 1;
+    }
+    .plan-price-note {
+      font-size: 15px;               /* was 13px */
+      color: #718096;
+    }
+
+    /* ── FIX 1: larger description ── */
+    .plan-desc {
+      font-size: 15px;               /* was 13px */
+      color: #4A5568;
+      line-height: 1.75;
+    }
+
+    .plan-badge-popular {
+      position: absolute; top: 14px; right: 14px;
+      background: #C9A84C; color: #0D1B2A;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      padding: 4px 10px; border-radius: 2px; font-family: 'Cinzel', serif;
+    }
+
+    /* PAYMENT SECTION */
+    #paymentSection {
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+      display: none;
+    }
+    #paymentSection.show { display: block; animation: fadeSlideIn 0.4s ease; }
+    @keyframes fadeSlideIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+    .payment-box {
+      background: #0D1B2A;
+      border-radius: 14px;
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 2rem;
+      align-items: start;
+    }
+    @media(max-width:640px) {
+      .payment-box { grid-template-columns: 1fr; }
+      .payment-divider { display: none; }
+    }
+    .payment-divider { background: rgba(201,168,76,0.2); width: 1px; }
+    .payment-col-label {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;               /* was 10px */
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(201,168,76,0.7);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .payment-amount-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;               /* was 48px */
+      font-weight: 700;
+      color: #C9A84C;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .payment-plan-name {
+      font-size: 15px;               /* was 13px */
+      color: rgba(245,243,238,0.55);
+      margin-bottom: 1.5rem;
+    }
+    .bank-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+    .bank-label {
+      font-size: 11px;               /* was 10px */
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(201,168,76,0.5);
+      margin-bottom: 3px;
+      font-family: 'Cinzel', serif;
+    }
+    .bank-val {
+      font-size: 17px;               /* was 15px */
+      font-weight: 600;
+      color: #F5F3EE;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.02em;
+    }
+    .bank-val.mono {
+      font-family: 'Courier New', monospace;
+      font-size: 15px;               /* was 14px */
+      background: rgba(201,168,76,0.08);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.15);
+      letter-spacing: 0.08em;
+    }
+    .payment-note {
+      margin-top: 1.25rem;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;               /* was 12px */
+      color: rgba(245,243,238,0.6);
+      line-height: 1.7;
+    }
+    .payment-note strong { color: #C9A84C; }
+
+    /* ── FIX 3: Step 3 header — more prominent ── */
+    .step3-header {
+      max-width: 860px;
+      margin: 2rem auto 1.25rem;
+      text-align: center;
+    }
+    .step3-divider-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .step3-divider-row span.bar {
+      display: inline-block;
+      width: 40px; height: 2px;
+      background: #C9A84C;
+    }
+    .step3-label {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;               /* was 10px */
+      letter-spacing: 0.18em;
+      color: #C9A84C;
+      font-weight: 700;
+    }
+    .step3-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      color: #0D1B2A;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step3-subtitle {
+      font-size: 15px;
+      color: #4A5568;
+    }
+
+    /* FORM */
+    .mem-form-card {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #F5F3EE;
+      border-radius: 14px;
+      padding: 2.5rem;
+      border: 1px solid rgba(13,27,42,0.08);
+    }
+
+    /* ── FIX 1: larger form section labels ── */
+    .form-section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;               /* was 10px */
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #C9A84C;
+      margin-bottom: 1.25rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      display: block;
+    }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin-bottom: 1rem; }
+    @media(max-width:600px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+    /* ── FIX 1: larger form labels & inputs ── */
+    .form-group label {
+      display: block;
+      font-size: 12px;               /* was 11px */
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #4A5568;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid rgba(13,27,42,0.15);
+      border-radius: 8px;
+      padding: 13px 16px;            /* slightly more padding */
+      font-size: 15px;               /* was 14px */
+      color: #0D1B2A;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group input[readonly] {
+      background: rgba(13,27,42,0.03);
+      color: #718096;
+      cursor: not-allowed;
+    }
+
+    .selected-plan-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 15px;               /* was 13px */
+      font-weight: 600;
+      color: #7A5E1A;
+      margin-bottom: 1.5rem;
+    }
+
+    .submit-area { margin-top: 2rem; }
+    .submit-btn {
+      width: 100%;
+      padding: 18px 0;
+      background: linear-gradient(135deg, #0D1B2A 0%, #1B3A5C 100%);
+      color: #C9A84C;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;               /* was 15px */
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      font-family: 'Cinzel', serif;
+    }
+    .submit-btn:hover { box-shadow: 0 8px 24px rgba(13,27,42,0.3); transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-note { font-size: 13px; color: #718096; text-align: center; margin-top: 10px; }
+
+    /* SUCCESS */
+    .success-box {
+      text-align: center;
+      padding: 2.5rem 2rem;
+    }
+    .success-icon { font-size: 52px; margin-bottom: 1rem; }
+    .success-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: #0D1B2A; margin-bottom: 10px; }
+    .success-box p { font-size: 15px; color: #4A5568; line-height: 1.75; }
+
+    /* COMPARISON TABLE */
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table thead th { padding: 14px 18px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; background: #0D1B2A; color: rgba(201,168,76,0.8); border: none; }
+    .compare-table thead th:first-child { text-align: left; }
+    .compare-table thead th:not(:first-child) { text-align: center; }
+    .compare-table tbody tr { border-bottom: 1px solid rgba(13,27,42,0.06); transition: background 0.15s; }
+    .compare-table tbody tr:nth-child(even) { background: #F5F3EE; }
+    .compare-table tbody tr:hover { background: #EDEAE3; }
+    .compare-table tbody td { padding: 14px 18px; font-size: 15px; color: #2D3748; }
+    .compare-table tbody td:not(:first-child) { text-align: center; }
+    .ct-yes { color: #1A6B3C; font-size: 20px; }
+    .ct-no  { color: #ccc;    font-size: 20px; }
+  </style>
+</head>
+<body>
+
+<div id="page-transition">
+  <div class="pt-logo"><img src="./images/logo.png" alt="PBFI Logo"></div>
+  <div class="pt-text">SHIELDING Property Buyers · SECURING DREAMS</div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <div class="navbar-logo-icon"><img src="./images/logo.png" alt="PBFI Logo"></div>
+    <div>
+      <div class="navbar-brand-name">Property Property Buyers Forum of India</div>
+      <div class="navbar-brand-tag">SHIELDING Property Buyers · SECURING DREAMS</div>
+    </div>
+  </a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a><a href="about.html">About Us</a>
+    <a href="membership.html" class="active">Membership</a><a href="resources.html">Resources</a><a href="contact.html">Contact</a>
+    <a href="#register" class="navbar-cta">Join Now</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div><div class="page-hero-bar"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow fade-in"><span></span><p>JOIN PBFI</p></div>
+    <h1 class="fade-up delay-1">Choose Your<br><em>Membership</em></h1>
+    <p class="subtitle fade-up delay-2">Join thousands of property Property Buyers who trust PBFI for protection, legal guidance, and collective representation.</p>
+  </div>
+</div>
+<style>
+  .ticker-wrap {
+    width: 100%;
+    background: #1a3a5c;
+    border-top: 2px solid #c8a951;
+    border-bottom: 2px solid #c8a951;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-label {
+    position: absolute;
+    left: 0; top: 0;
+    height: 100%;
+    background: #c8a951;
+    color: #0D1B2A;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ticker-fade-left {
+    position: absolute;
+    left: 110px; top: 0;
+    width: 40px; height: 100%;
+    background: linear-gradient(to right, #0D1B2A, transparent);
+    z-index: 1;
+  }
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker-scroll 8s linear infinite;
+    padding-left: 120px;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-text {
+    font-size: 13px;
+    color: #e8dfc8;
+    padding-right: 80px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .ticker-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: #c8a951;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+<br>
+<div class="ticker-wrap">
+  <div class="ticker-label">Disclaimer</div>
+  <div class="ticker-fade-left"></div>
+  <div class="ticker-track">
+    <span class="ticker-text">
+      <span class="ticker-dot"></span>
+      The Property Property Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.
+    </span>
+    <span class="ticker-text">
+      <span class="ticker-dot"></span>
+      The Property Property Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.
+    </span>
+  </div>
+</div>
+<!-- PLAN SELECTOR -->
+<section class="section section-white" id="plans">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="eyebrow">MEMBERSHIP PLANS</span>
+      <h2>Select Your Plan</h2>
+      <p>Choose between Individual or Institutional membership — Annual or Lifetime. Click a plan to proceed.</p>
+    </div>
+
+    <!-- INDIVIDUAL -->
+    <div style="max-width:960px;margin:0 auto 2rem">
+      <div class="plan-group-label individual reveal">INDIVIDUAL MEMBERSHIP</div>
+      <div class="plans-grid" style="margin-bottom:1rem">
+
+        <!-- Individual Annual -->
+        <div class="plan-card reveal reveal-d1" onclick="selectPlan(this,'individual','annual','₹500','500')" data-plan="individual-annual">
+          <div class="plan-card-inner">
+            <div class="plan-radio"><div class="plan-radio-dot"></div></div>
+            <div class="plan-details">
+              <span class="plan-type-badge annual">ANNUAL</span>
+              <div class="plan-price-row">
+                <span class="plan-price-val">₹500</span>
+                <span class="plan-price-note">/ year</span>
+              </div>
+              <p class="plan-desc">Yearly membership for individual property Property Buyers seeking awareness, RERA updates, and community support.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Individual Lifetime -->
+        <div class="plan-card reveal reveal-d2" onclick="selectPlan(this,'individual','lifetime','₹5,000','5000')" data-plan="individual-lifetime">
+          <div class="plan-badge-popular">BEST VALUE</div>
+          <div class="plan-card-inner">
+            <div class="plan-radio"><div class="plan-radio-dot"></div></div>
+            <div class="plan-details">
+              <span class="plan-type-badge lifetime">LIFETIME</span>
+              <div class="plan-price-row">
+                <span class="plan-price-val">₹5,000</span>
+                <span class="plan-price-note">one-time</span>
+              </div>
+              <p class="plan-desc">One-time payment for permanent individual membership. Never renew — full benefits forever.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INSTITUTION -->
+      <div class="plan-group-label institution reveal" style="margin-top:1.75rem">INSTITUTIONAL MEMBERSHIP</div>
+      <div class="plans-grid">
+
+        <!-- Institution Annual -->
+        <div class="plan-card reveal reveal-d3" onclick="selectPlan(this,'institution','annual','₹1,000','1000')" data-plan="institution-annual">
+          <div class="plan-card-inner">
+            <div class="plan-radio"><div class="plan-radio-dot"></div></div>
+            <div class="plan-details">
+              <span class="plan-type-badge annual">ANNUAL</span>
+              <div class="plan-price-row">
+                <span class="plan-price-val">₹1,000</span>
+                <span class="plan-price-note">/ year</span>
+              </div>
+              <p class="plan-desc">Annual membership for RWAs, housing societies, NGOs, and buyer groups seeking collective representation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Institution Lifetime -->
+        <div class="plan-card reveal reveal-d4" onclick="selectPlan(this,'institution','lifetime','₹10,000','10000')" data-plan="institution-lifetime">
+          <div class="plan-badge-popular">BEST VALUE</div>
+          <div class="plan-card-inner">
+            <div class="plan-radio"><div class="plan-radio-dot"></div></div>
+            <div class="plan-details">
+              <span class="plan-type-badge lifetime">LIFETIME</span>
+              <div class="plan-price-row">
+                <span class="plan-price-val">₹10,000</span>
+                <span class="plan-price-note">one-time</span>
+              </div>
+              <p class="plan-desc">Permanent institutional membership. Ideal for large RWAs and Property Buyers' associations wanting long-term support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: PAYMENT DETAILS ── -->
+    <div id="paymentSection">
+      <div style="max-width:860px;margin:0 auto 1.5rem;text-align:center">
+        <span style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.18em;color:#C9A84C;font-weight:700">STEP 2 OF 3 — MAKE PAYMENT</span>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.5vw,2rem);color:#0D1B2A;margin-top:8px">Transfer the Membership Fee</h3>
+        <p style="font-size:15px;color:#4A5568;margin-top:6px">Use the bank details below to make a NEFT/IMPS/UPI transfer. Save your transaction reference — you'll need it in the next step.</p>
+      </div>
+
+      <div class="payment-box reveal">
+        <!-- Left: Amount -->
+        <div>
+          <span class="payment-col-label">AMOUNT TO PAY</span>
+          <div class="payment-amount-display" id="payAmountDisplay">—</div>
+          <div class="payment-plan-name" id="payPlanName">—</div>
+          <div class="payment-note">
+            <strong>Note:</strong> Please transfer the exact amount shown above. Include your full name in the payment remarks where possible. Your membership will be activated within <strong>24–48 hours</strong> of verification.
+          </div>
+        </div>
+
+        <div class="payment-divider"></div>
+
+        <!-- Right: Bank Details -->
+        <div>
+          <span class="payment-col-label">BANK TRANSFER DETAILS</span>
+          <div class="bank-row">
+            <span class="bank-label">ACCOUNT NAME</span>
+            <span class="bank-val">PPBFI Welfare Foundation</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">ACCOUNT NUMBER</span>
+            <span class="bank-val mono">925010038868349</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">IFSC CODE</span>
+            <span class="bank-val mono">UTIB0000016</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">BANK</span>
+            <span class="bank-val">Axis Bank</span>
+          </div>
+          <div class="bank-row" style="margin-bottom:0">
+            <span class="bank-label">PAYMENT MODES</span>
+            <span class="bank-val" style="font-size:14px;color:rgba(245,243,238,0.7)">NEFT · IMPS · UPI · Bank Transfer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FIX 3: Step 3 header — now a proper visible section ── -->
+      <div class="step3-header">
+        <div class="step3-divider-row">
+          <span class="bar"></span>
+          <span class="step3-label">STEP 3 OF 3 — SUBMIT YOUR DETAILS</span>
+          <span class="bar"></span>
+        </div>
+        <p class="step3-title">Fill in Your Registration Details</p>
+        <p class="step3-subtitle">Once the transfer is complete, fill in your details below and submit your transaction reference number to complete registration.</p>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: REGISTRATION FORM ── -->
+    <div id="memberFormWrap" class="mem-form-card reveal" style="display:none">
+      <!-- anchor so #register in navbar CTA still works -->
+      <span id="register" style="display:block;position:relative;top:-80px;visibility:hidden"></span>
+      <div id="memberFormContent">
+        <div id="selectedPlanPillWrap" style="margin-bottom:1.5rem"></div>
+
+        <span class="form-section-label">PERSONAL / ORGANISATION DETAILS</span>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>FULL NAME / ORGANISATION NAME *</label>
+            <input type="text" id="fName" placeholder="Your full name or organisation name" required>
+          </div>
+          <div class="form-group">
+            <label>EMAIL ADDRESS *</label>
+            <input type="email" id="fEmail" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>PHONE NUMBER *</label>
+            <input type="tel" id="fPhone" placeholder="+91 00000 00000" required>
+          </div>
+          <div class="form-group">
+            <label>CITY / STATE *</label>
+            <input type="text" id="fCity" placeholder="Chennai, Tamil Nadu" required>
+          </div>
+        </div>
+
+        <span class="form-section-label" style="margin-top:1.5rem">MEMBERSHIP & PAYMENT DETAILS</span>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>MEMBERSHIP CATEGORY *</label>
+            <input type="text" id="fCategory" readonly placeholder="Select a plan above">
+          </div>
+          <div class="form-group">
+            <label>MEMBERSHIP PLAN *</label>
+            <input type="text" id="fPlan" readonly placeholder="Select a plan above">
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>AMOUNT PAID (₹) *</label>
+            <input type="text" id="fAmount" readonly placeholder="—">
+          </div>
+          <div class="form-group">
+            <label>DATE OF PAYMENT *</label>
+            <input type="date" id="fPayDate" required>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1rem">
+          <label>TRANSACTION REFERENCE / UTR NUMBER *</label>
+          <input type="text" id="fUTR" placeholder="e.g. UTIB25040312345 or UPI reference number" required>
+        </div>
+        <div class="form-group">
+          <label>ADDITIONAL NOTES (OPTIONAL)</label>
+          <textarea id="fNotes" placeholder="Any property concern or reason for joining PBFI…"></textarea>
+        </div>
+
+        <div class="submit-area">
+          <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">SUBMIT REGISTRATION →</button>
+          <p class="form-note">Our team will verify your payment and activate your membership within 24–48 hours. A confirmation will be sent to your email.</p>
+        </div>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div id="memberFormSuccess" style="display:none" class="success-box">
+        <div class="success-icon">🎉</div>
+        <h3>Registration Submitted!</h3>
+        <p>Thank you for joining Property Property Buyers Forum of India. Your membership application has been received.<br>Our team will verify your payment and activate your membership within <strong>24–48 hours</strong>.<br>A confirmation will be sent to your registered email address.</p>
+        <a href="contact.html" class="btn btn-navy" style="display:inline-block;margin-top:1.75rem;border-radius:4px">Contact Us for Help</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section section-cream">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="eyebrow">PLAN COMPARISON</span>
+      <h2>What's Included</h2>
+    </div>
+    <div style="max-width:900px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;border:1px solid rgba(13,27,42,0.08)" class="reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding-left:22px">FEATURE</th>
+            <th>INDIVIDUAL<br><span style="font-size:10px;opacity:0.6">₹500 / ₹5,000</span></th>
+            <th>INSTITUTION<br><span style="font-size:10px;opacity:0.6">₹1,000 / ₹10,000</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Common RERA Updates</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>Legal Awareness Resources</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>PBFI Newsletter &amp; Announcements</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>Community Forum Access</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>State-wise RERA Updates</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>Exclusive Judgment Library</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>District Coordinator Access</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>Free Consultation (Quarterly)</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>Collective Group Representation</td><td><span class="ct-no">✗</span></td><td><span class="ct-yes">✓</span></td></tr>
+          <tr><td>RWA / Society Support</td><td><span class="ct-no">✗</span></td><td><span class="ct-yes">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Property Property Buyers Forum of India</div>
+      <span class="footer-brand-tag">PPBFI WELFARE FOUNDATION</span>
+      <p class="footer-brand-desc">Protecting property Property Buyers across India through legal awareness, RERA advocacy, and collective representation.</p>
+    </div>
+    <div class="footer-col"><h5>Navigation</h5><a href="index.html">Home</a><a href="about.html">About Us</a><a href="membership.html">Membership</a><a href="resources.html">Resources</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h5>Membership</h5><a href="#plans">Individual Plans</a><a href="#plans">Institutional Plans</a><a href="#register">Register Now</a></div>
+    <div class="footer-col"><h5>Contact</h5><a href="tel:+919488126077">+91 94881 26077</a><a href="mailto:propertyProperty Buyersforum@gmail.com">propertyProperty Buyersforum@gmail.com</a><a href="https://wa.me/919488126077" target="_blank">WhatsApp Us</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 PPBFI Welfare Foundation. All rights reserved.</span><span>Shielding Property Buyers · Securing Dreams</span></div>
+</footer>
+
+<a href="https://wa.me/919488126077" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+<script src="animations.js"></script>
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────────────────────
+  var MEMBERSHIP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6Vi0Rz594YaVPsXuWG6kr6wNLb4DMpqEVWNissRX646jJ1MC2-wsAwik3x--ux4sr/exec';
+  // ────────────────────────────────────────────────────────────────────────
+
+  var selectedPlan = null;
+
+  var PLAN_DATA = {
+    'individual-annual':    { category:'Individual',  plan:'Annual',   display:'₹500',    amount:'500',   note:'Individual — Annual Membership'      },
+    'individual-lifetime':  { category:'Individual',  plan:'Lifetime', display:'₹5,000',  amount:'5000',  note:'Individual — Lifetime Membership'    },
+    'institution-annual':   { category:'Institution', plan:'Annual',   display:'₹1,000',  amount:'1000',  note:'Institutional — Annual Membership'   },
+    'institution-lifetime': { category:'Institution', plan:'Lifetime', display:'₹10,000', amount:'10000', note:'Institutional — Lifetime Membership' }
+  };
+
+  function selectPlan(card, category, planType, displayPrice, amountVal) {
+    // Deselect all cards
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    var key = category + '-' + planType;
+    selectedPlan = PLAN_DATA[key];
+
+    // Update payment section
+    document.getElementById('payAmountDisplay').textContent = displayPrice;
+    document.getElementById('payPlanName').textContent = selectedPlan.note;
+
+    // Update form fields
+    document.getElementById('fCategory').value = selectedPlan.category;
+    document.getElementById('fPlan').value     = selectedPlan.plan + ' Membership';
+    document.getElementById('fAmount').value   = amountVal;
+
+    // Update selected-plan pill
+    document.getElementById('selectedPlanPillWrap').innerHTML =
+      '<span class="selected-plan-pill">✦ ' + selectedPlan.note + ' — ' + displayPrice + '</span>';
+
+    // Show payment section and form
+    var ps = document.getElementById('paymentSection');
+    var fw = document.getElementById('memberFormWrap');
+    ps.style.display = 'block';
+    fw.style.display = 'block';
+    setTimeout(function(){ ps.classList.add('show'); }, 10);
+
+    // Scroll smoothly to payment section
+    setTimeout(function(){
+      ps.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
+
+  function submitForm() {
+    if (!selectedPlan) {
+      alert('Please select a membership plan above.');
+      return;
+    }
+
+    var name    = document.getElementById('fName').value.trim();
+    var email   = document.getElementById('fEmail').value.trim();
+    var phone   = document.getElementById('fPhone').value.trim();
+    var city    = document.getElementById('fCity').value.trim();
+    var payDate = document.getElementById('fPayDate').value.trim();
+    var utr     = document.getElementById('fUTR').value.trim();
+    var notes   = document.getElementById('fNotes').value.trim();
+
+    if (!name || !email || !phone || !city || !payDate || !utr) {
+      alert('Please fill in all required fields including Transaction Reference and Date of Payment.');
+      return;
+    }
+
+    var btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'SUBMITTING…';
+
+    var payload = {
+      name:     name,
+      email:    email,
+      phone:    phone,
+      city:     city,
+      category: selectedPlan.category,
+      plan:     selectedPlan.plan,
+      amount:   selectedPlan.amount,
+      utr:      utr,
+      payDate:  payDate,
+      notes:    notes
+    };
+
+    fetch(MEMBERSHIP_SCRIPT_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function() {
+      document.getElementById('memberFormContent').style.display = 'none';
+      document.getElementById('memberFormSuccess').style.display = 'block';
+      document.getElementById('memberFormSuccess').scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'SUBMIT REGISTRATION →';
+      alert('Something went wrong. Please try again or contact us directly at propertyProperty Buyersforum@gmail.com');
+    });
+  }
+</script>
+
+</body>
+</html>

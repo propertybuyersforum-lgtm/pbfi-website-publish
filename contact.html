@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Contact Us — Property Buyers Forum of India</title>
+  <meta name="description" content="Contact PBFI Welfare Foundation — call +91 94444 22442, WhatsApp us, or send an enquiry. We respond within 24 hours.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Disclaimer Ticker ── */
+    .disclaimer-ticker {
+      background: #0D1B2A;
+      color: rgba(245,243,238,0.72);
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 9px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      position: relative;
+      z-index: 99;
+    }
+    .disclaimer-ticker-inner {
+      display: inline-flex;
+      animation: tickerScroll 38s linear infinite;
+      gap: 0;
+    }
+    .disclaimer-ticker-inner:hover { animation-play-state: paused; }
+    .disclaimer-ticker-segment {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      padding-right: 80px;
+    }
+    .ticker-label {
+      color: #C9A84C;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      background: #C9A84C;
+      border-radius: 50%;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Form styles ── */
+    .form-sending { opacity: 0.6; pointer-events: none; }
+    .btn-spinner {
+      display: inline-block; width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      margin-right: 8px; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .field-error { border-color: #E53E3E !important; background: #FFF5F5 !important; }
+    .field-error-msg { font-size: 12px; color: #E53E3E; margin-top: 4px; }
+
+    /* ── Success state ── */
+    .success-box { text-align: center; padding: 3rem 2rem; }
+    .success-icon { font-size: 52px; margin-bottom: 1rem; display: block; animation: popIn 0.5s cubic-bezier(0.25,1,0.5,1); }
+    @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+    .success-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #0D1B2A; margin-bottom: 8px; }
+    .success-box p { color: #4A5568; font-size: 15px; line-height: 1.7; max-width: 340px; margin: 0 auto; }
+
+    /* ── Contact icon cards ── */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(13,27,42,0.07);
+    }
+    .contact-item:last-of-type { border-bottom: none; }
+    .contact-icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #0D1B2A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap svg {
+      width: 20px;
+      height: 20px;
+      stroke: #C9A84C;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .contact-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #C9A84C; text-transform: uppercase; margin-bottom: 4px; }
+    .contact-value { font-size: 14px; color: #0D1B2A; line-height: 1.7; }
+    .contact-value a { color: #0D1B2A; text-decoration: none; }
+    .contact-value a:hover { color: #C9A84C; }
+
+    /* ── Form inputs ── */
+    .enquiry-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 560px) {
+      .enquiry-form .form-row { grid-template-columns: 1fr; }
+    }
+    .enquiry-form .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .enquiry-form label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      color: #0D1B2A;
+      text-transform: uppercase;
+    }
+    .enquiry-form input,
+    .enquiry-form select,
+    .enquiry-form textarea {
+      border: 1.5px solid rgba(13,27,42,0.15);
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-size: 14px;
+      color: #0D1B2A;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      font-family: inherit;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .enquiry-form input:focus,
+    .enquiry-form select:focus,
+    .enquiry-form textarea:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+    .enquiry-form textarea { resize: vertical; min-height: 120px; }
+    .enquiry-form input::placeholder,
+    .enquiry-form textarea::placeholder { color: #aaa; }
+  </style>
+</head>
+<body>
+<div id="page-transition"><div class="pt-logo"><img src="./images/logo.png" alt="PBFI"></div><div class="pt-text">SHIELDING Buyers · SECURING DREAMS</div></div>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <div class="navbar-logo-icon"><img src="./images/logo.png" alt="PBFI"></div>
+    <div><div class="navbar-brand-name">Property Buyers Forum of India</div><div class="navbar-brand-tag">SHIELDING BUYERS · SECURING DREAMS</div></div>
+  </a>
+  <div class="navbar-links">
+    <a href="index.html">Home</a><a href="about.html">About Us</a>
+    <a href="membership.html">Membership</a><a href="resources.html">Resources</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="membership.html" class="navbar-cta">Join Now</a>
+  </div>
+</nav>
+
+<!-- DISCLAIMER TICKER -->
+<div class="disclaimer-ticker" aria-label="Disclaimer">
+  <div class="disclaimer-ticker-inner">
+    <!-- Segment 1 -->
+    <span class="disclaimer-ticker-segment">
+      <span class="ticker-label">Disclaimer</span>
+      <span class="ticker-dot"></span>
+      <span>The Property Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.</span>
+    </span>
+    <!-- Segment 2 (duplicate for seamless loop) -->
+    <span class="disclaimer-ticker-segment">
+      <span class="ticker-label">Disclaimer</span>
+      <span class="ticker-dot"></span>
+      <span>The Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.</span>
+    </span>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div><div class="page-hero-bar"></div>
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow fade-in"><span></span><p>CONTACT US</p></div>
+    <h1 class="fade-up delay-1">We're Here<br><em>to Help.</em></h1>
+    <p class="subtitle fade-up delay-2">Reach out for membership enquiries, consultation requests, or any property buyer concern. We respond within 24 hours.</p>
+  </div>
+</div>
+<style>
+  .ticker-wrap {
+    width: 100%;
+    background: #1a3a5c;
+    border-top: 2px solid #c8a951;
+    border-bottom: 2px solid #c8a951;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-label {
+    position: absolute;
+    left: 0; top: 0;
+    height: 100%;
+    background: #c8a951;
+    color: #0D1B2A;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ticker-fade-left {
+    position: absolute;
+    left: 110px; top: 0;
+    width: 40px; height: 100%;
+    background: linear-gradient(to right, #0D1B2A, transparent);
+    z-index: 1;
+  }
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker-scroll 8s linear infinite;
+    padding-left: 120px;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-text {
+    font-size: 13px;
+    color: #e8dfc8;
+    padding-right: 80px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .ticker-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: #c8a951;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+<br>
+<div class="ticker-wrap">
+  <div class="ticker-label">Disclaimer</div>
+  <div class="ticker-fade-left"></div>
+  <div class="ticker-track">
+    <span class="ticker-text">
+      <span class="ticker-dot"></span>
+      The Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.
+    </span>
+    <span class="ticker-text">
+      <span class="ticker-dot"></span>
+      The Property Buyers Forum of India is a voluntary, not-for-profit discussion platform; all views expressed are solely those of individual users, and the forum assumes no legal, financial, or other liability arising from reliance on such information.
+    </span>
+  </div>
+</div>
+<!-- MAIN SECTION -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="grid-2" style="gap:4rem;align-items:start">
+
+      <!-- LEFT: Contact Info -->
+      <div class="reveal reveal-left">
+        <span style="color:#C9A84C;font-size:11px;letter-spacing:0.14em;font-weight:700;display:block;margin-bottom:20px;text-transform:uppercase">Get in Touch</span>
+
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Address</div>
+            <div class="contact-value">1014, Pine Block, Orchid Springss<br>Water Canal Road, Korattur<br>Chennai — 600 076, Tamil Nadu</div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.84a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">
+              <a href="tel:+919444422442">+91 94444 22442</a>
+              <a href="tel:+919677158111">+91 96771 58111</a>
+              <a href="tel:+914449578889">044 – 4957 8889 (Office)</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">
+              <a href="mailto:propertyProperty Buyersforum@gmail.com">propertybuyersforum@gmail.com</a>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value">+91 94444 22442</div>
+            <a href="https://wa.me/919444422442" style="font-size:13px;color:#1A6B3C;font-weight:600;display:inline-block;margin-top:4px" target="_blank">→ Open in WhatsApp</a>
+          </div>
+        </div>
+
+        <a href="https://wa.me/919444422442" class="whatsapp-btn" target="_blank">
+          <svg style="width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <div><div style="font-size:14px;font-weight:600">Chat with us on WhatsApp</div><div style="font-size:12px;opacity:0.85">Quick response during working hours</div></div>
+        </a>
+
+        <!-- Working Hours -->
+        <div style="margin-top:2rem;background:#F5F3EE;border-radius:8px;padding:1.5rem;border-left:3px solid #C9A84C">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <svg style="width:16px;height:16px;stroke:#C9A84C;fill:none;stroke-width:1.7;stroke-linecap:round;flex-shrink:0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <h4 style="font-family:'Cormorant Garamond',serif;font-size:17px;color:#0D1B2A;margin:0">Working Hours</h4>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#4A5568">
+            <div style="display:flex;justify-content:space-between"><span>Monday – Friday</span><span style="font-weight:600;color:#0D1B2A">9:00 AM – 6:00 PM</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Saturday</span><span style="font-weight:600;color:#0D1B2A">10:00 AM – 2:00 PM</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Sunday</span><span style="color:#aaa">Closed</span></div>
+          </div>
+        </div>
+
+        <!-- Social -->
+
+        <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <a href="membership.html" class="btn btn-navy btn-sm" style="text-align:center;display:block;border-radius:4px">Join PBFI</a>
+          <a href="resources.html" class="btn btn-sm" style="text-align:center;display:block;border-radius:4px;background:#F5F3EE;color:#0D1B2A;border:1px solid rgba(13,27,42,0.15);font-weight:600">View Resources</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Enquiry Form -->
+      <div style="background:#F5F3EE;border-radius:12px;padding:2.75rem;border:1px solid rgba(13,27,42,0.08)" class="reveal reveal-right">
+        <div id="formContent">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#0D1B2A;margin-bottom:6px">Send an Enquiry</h3>
+          <p style="font-size:14px;color:#4A5568;margin-bottom:2rem;line-height:1.65">Fill in your details and describe your concern. Dr. Suresh or our team will get back to you within 24 hours.</p>
+
+          <form id="contactForm" class="enquiry-form" novalidate>
+            <div class="form-row">
+              <div class="fg">
+                <label for="f-name">Full Name <span style="color:#C9A84C">*</span></label>
+                <input id="f-name" type="text" placeholder="Your full name" required>
+              </div>
+              <div class="fg">
+                <label for="f-email">Email Address <span style="color:#C9A84C">*</span></label>
+                <input id="f-email" type="email" placeholder="your@email.com" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="fg">
+                <label for="f-phone">Phone Number</label>
+                <input id="f-phone" type="tel" placeholder="+91 00000 00000">
+              </div>
+              <div class="fg">
+                <label for="f-subject">Subject <span style="color:#C9A84C">*</span></label>
+                <select id="f-subject" required>
+                  <option value="">Select a subject</option>
+                  <option>Membership Enquiry</option>
+                  <option>RERA Complaint Guidance</option>
+                  <option>Property Dispute Support</option>
+                  <option>Consultation Request</option>
+                  <option>General Enquiry</option>
+                  <option>Become a Coordinator</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg">
+              <label for="f-city">State / City</label>
+              <input id="f-city" type="text" placeholder="Chennai, Tamil Nadu">
+            </div>
+            <div class="fg">
+              <label for="f-message">Your Message <span style="color:#C9A84C">*</span></label>
+              <textarea id="f-message" rows="5" placeholder="Describe your property concern or enquiry in detail…" required></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn btn-navy" style="width:100%;padding:15px 0;font-size:15px;border-radius:6px;letter-spacing:0.07em;margin-top:4px">
+              Submit Enquiry →
+            </button>
+            <p style="font-size:12px;color:#999;text-align:center;margin-top:14px;line-height:1.6">We respond within 24 working hours. Your details are kept strictly confidential.</p>
+          </form>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="formSuccess" style="display:none" class="success-box">
+          <span class="success-icon">✅</span>
+          <h3>Enquiry Submitted!</h3>
+          <p>Thank you for reaching out. Our team will review your message and respond within 24 hours.</p>
+          <p style="font-size:13px;color:#888;margin-top:10px">Confirmation sent to <strong id="submitted-email" style="color:#0D1B2A"></strong></p>
+          <button onclick="resetForm()" class="btn btn-navy" style="margin-top:1.5rem;padding:10px 28px;border-radius:4px">Submit Another</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section style="background:#F5F3EE;padding:0 clamp(1.5rem,5vw,5rem) 5rem">
+  <div class="section-inner">
+    <div style="background:#0D1B2A;border-radius:8px;overflow:hidden;height:300px;display:flex;align-items:center;justify-content:center" class="reveal">
+      <div style="text-align:center">
+        <svg style="width:40px;height:40px;stroke:#C9A84C;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;margin-bottom:14px" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <p style="color:rgba(245,243,238,0.7);font-size:14px;margin-bottom:4px">1014, Pine Block, Orchid Springss</p>
+        <p style="color:rgba(245,243,238,0.7);font-size:14px;margin-bottom:8px">Water Canal Road, Korattur, Chennai — 600 076</p>
+        <p style="color:#C9A84C;font-size:13px;margin-bottom:18px">Tamil Nadu, India</p>
+        <a href="https://maps.google.com/?q=Orchid+Springss+Korattur+Chennai" target="_blank" class="btn btn-gold btn-sm" style="border-radius:3px">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div><div class="footer-brand-name">Property Buyers Forum of India</div><span class="footer-brand-tag">PBFI WELFARE FOUNDATION — SECTION 8 COMPANY</span><p class="footer-brand-desc">A registered non-profit under the Companies Act, 2013. Protecting property Buyers across India through legal awareness, RERA advocacy, and collective representation.</p></div>
+    <div class="footer-col"><h5>Navigation</h5><a href="index.html">Home</a><a href="about.html">About Us</a><a href="membership.html">Membership</a><a href="resources.html">Resources</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h5>Membership</h5><a href="membership.html">Ordinary Member</a><a href="membership.html">Premium Member</a><a href="membership.html#register">Register Now</a></div>
+    <div class="footer-col"><h5>Contact</h5><a href="tel:+919444422442">+91 94444 22442</a><a href="tel:+919677158111">+91 96771 58111</a><a href="mailto:propertybuyersforum@gmail.com">prepertybuyersforum@gmail.com</a><a href="https://wa.me/919444422442" target="_blank">WhatsApp Us</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 PBFI Welfare Foundation. Registered under Companies Act, 2013.</span><span>Shielding Buyers · Securing Dreams</span></div>
+</footer>
+
+<a href="https://wa.me/919444422442" class="whatsapp-float" target="_blank">💬</a>
+
+<script src="animations.js"></script>
+<script>
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuEdPGf2ZJuyn3XeQyU6bJhw2yZH-HM4TD1CKTKK51LQ8RRfXpx3-gYI2y53k05j_V/exec";
+
+var form = document.getElementById('contactForm');
+var btn  = document.getElementById('submitBtn');
+
+/* ── Submit handler ── */
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  var userEmail = document.getElementById('f-email').value.trim();
+  var payload = {
+    name:    document.getElementById('f-name').value.trim(),
+    email:   userEmail,
+    phone:   document.getElementById('f-phone').value.trim(),
+    subject: document.getElementById('f-subject').value,
+    city:    document.getElementById('f-city').value.trim(),
+    message: document.getElementById('f-message').value.trim()
+  };
+
+  btn.innerHTML = '<span class="btn-spinner"></span>Sending…';
+  btn.disabled  = true;
+  form.classList.add('form-sending');
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      mode: 'no-cors'
+    });
+    showSuccess(userEmail);
+  } catch (err) {
+    showSuccess(userEmail);
+  }
+});
+
+/* ── Validation ── */
+function validateForm() {
+  clearErrors();
+  var ok   = true;
+  var name = document.getElementById('f-name');
+  var mail = document.getElementById('f-email');
+  var subj = document.getElementById('f-subject');
+  var msg  = document.getElementById('f-message');
+
+  if (!name.value.trim())                              { setError(name, 'Please enter your name'); ok = false; }
+  if (!mail.value.trim() || !mail.value.includes('@')) { setError(mail, 'Please enter a valid email'); ok = false; }
+  if (!subj.value)                                     { setError(subj, 'Please select a subject'); ok = false; }
+  if (msg.value.trim().length < 10)                    { setError(msg,  'Please describe your concern (min 10 chars)'); ok = false; }
+  return ok;
+}
+function setError(el, msg) {
+  el.classList.add('field-error');
+  var d = document.createElement('div');
+  d.className = 'field-error-msg';
+  d.textContent = msg;
+  el.parentNode.appendChild(d);
+}
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(function(el){ el.classList.remove('field-error'); });
+  document.querySelectorAll('.field-error-msg').forEach(function(el){ el.remove(); });
+}
+
+/* ── Show success / reset ── */
+function showSuccess(email) {
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display  = 'block';
+  document.getElementById('submitted-email').textContent = email || '';
+  btn.innerHTML = 'Submit Enquiry →';
+  btn.disabled  = false;
+  form.classList.remove('form-sending');
+  form.reset();
+}
+function resetForm() {
+  document.getElementById('formSuccess').style.display = 'none';
+  document.getElementById('formContent').style.display  = 'block';
+}
+</script>
+</body>
+</html>
